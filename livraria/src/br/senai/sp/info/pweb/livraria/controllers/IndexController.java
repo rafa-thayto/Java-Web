@@ -16,10 +16,4 @@ public class IndexController {
 		return "index";
 	}
 	
-	@RequestMapping("index2")
-	public String abrirOutraPage() {
-		
-		return "outro-index";
-	}
-	
 }

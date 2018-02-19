@@ -8,5 +8,8 @@
 </head>
 <body>
 	<h1>Abriu o index pelo controller</h1>
+	
+	<a href="/livraria/entrar">Login</a>
+	<a href="/livraria/usuario/novo">Cadastrar</a>
 </body>
 </html>
