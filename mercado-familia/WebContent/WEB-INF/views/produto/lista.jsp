@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Mercado Família</title>
+<title>Lista</title>
 </head>
 <body>
-	<h1>Bem vindo ao mercado família aqui a gente é irmão</h1>
-	<a href="/mercado-familia/usuario/cadastro">Cadastro</a>
-	<a href="/mercado-familia/usuario/login">Login</a>
+
 </body>
 </html>

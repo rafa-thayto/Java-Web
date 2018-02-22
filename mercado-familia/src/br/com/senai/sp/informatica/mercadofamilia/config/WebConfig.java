@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan("br.com.senai.sp.informatica.mercadofamilia")
-public class WebConfig implements WebMvcConfigurer{
+public class WebConfig implements WebMvcConfigurer {
 	
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -23,5 +23,9 @@ public class WebConfig implements WebMvcConfigurer{
 		// Registrando
 		registry.viewResolver(resolver);
 	}
+	
+
+	
+	
 	
 }
