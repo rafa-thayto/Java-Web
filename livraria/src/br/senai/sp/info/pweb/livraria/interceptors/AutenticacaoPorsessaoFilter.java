@@ -1,4 +1,4 @@
-package br.senai.sp.info.pweb.livraria.filters;
+package br.senai.sp.info.pweb.livraria.interceptors;
 
 import java.io.IOException;
 
@@ -9,9 +9,16 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter("/*")
+import org.springframework.beans.factory.annotation.Autowired;
+
+import br.senai.sp.info.pweb.livraria.util.SessionUtils;
+
+//@WebFilter("/*") - Não se usa filte no Spring, mas sim Interceptor
 public class AutenticacaoPorsessaoFilter extends HttpFilter {
 
+	@Autowired
+	private SessionUtils sessionUtils;
+	
 	@Override
 	public void destroy() {
 		
@@ -22,8 +29,8 @@ public class AutenticacaoPorsessaoFilter extends HttpFilter {
 			throws IOException, ServletException {
 		
 		boolean necessitaAutenticacap = req.getRequestURI().contains("/app");
-		if (necessitaAutenticacap && req.getSession().getAttribute("usuario") == null) {
-			res.setStatus(403);
+		if (necessitaAutenticacap && !sessionUtils.isUsuarioLogado()) {
+			res.setStatus(401);
 		} else {
 			chain.doFilter(req, res);
 		}
