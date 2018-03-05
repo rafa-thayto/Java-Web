@@ -28,9 +28,15 @@ public class CategoriaController {
 	 * Abre o formulário de cadastro de categoria
 	 * @return
 	 */
-	@GetMapping("/app/categoria/novo")
+	@GetMapping("/app/categoria")
 	// Model -> Objeto que envia dados para view
-	public String abreMain (Model model) {
+	public String abreMain (Model model,
+			@RequestParam(name = "id", required = false) Long id) {
+		// Verifica se é uma alteração (se o id não é nulo)
+		if (id != null) {
+			Categoria cat = categoriaDAO.search(id);
+			model.addAttribute("categoria", cat);
+		}
 		
 		// Buscando as categorias do usuário logado
 		Usuario usuarioLogado = sessionUtils.getUsuarioLogado();
@@ -54,12 +60,18 @@ public class CategoriaController {
 	
 	@PostMapping("/app/categoria/salvar")
 	public String salvar (Categoria categoria, HttpSession session) {
-		Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
+		// Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
 		
-		categoria.setUsuario(usuarioLogado);
-		categoriaDAO.persistence(categoria);
+		categoria.setUsuario(sessionUtils.getUsuarioLogado());
+		// SE a catagoria não tiver ID significa que é um cadastro
+		if (categoria.getId() == null) {
+			categoriaDAO.persistence(categoria);
+		} else {
+		// SENAO é uma alteração
+			categoriaDAO.change(categoria);
+		}
 		
-		return "redirect:/app/categoria/novo";
+		return "redirect:/app/categoria";
 	}
 	
 }

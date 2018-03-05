@@ -14,7 +14,7 @@
 	
 	<ul>
 		<c:url value="/app/livro/novo" var="urlNovoLivro" />
-		<c:url value="/app/categoria/novo" var="urlNovaCategoria" />
+		<c:url value="/app/categoria" var="urlNovaCategoria" />
 		
 		<li><a href="${ urlNovoLivro }">Novo Livro</a></li>
 		<li><a href="${ urlNovaCategoria }">Categoria / Nova</a></li>

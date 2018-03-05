@@ -22,7 +22,29 @@ public class CategoriaDAO implements DAO<Categoria> {
 
 	@Override
 	public Categoria search(Long id) {
-		return null;
+		String sql = "SELECT nome FROM categoria WHERE id = ?";
+		try {
+			connectionFactory.open();
+			
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			
+			stmt.setLong(1, id);
+
+			// Realiza a busca de usuários
+			ResultSet resultados = stmt.executeQuery();
+			Categoria c = new Categoria();
+			if (resultados.next()) {
+				c.setId(id);
+				c.setNome(resultados.getString("nome"));
+			}
+			// Fecha o resultSet e retorna a lista com os dados
+			resultados.close();
+			return c;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			connectionFactory.close();			
+		}
 	}
 
 	@Override
@@ -62,7 +84,22 @@ public class CategoriaDAO implements DAO<Categoria> {
 
 	@Override
 	public void change(Categoria obj) {
+		String sql = "UPDATE categoria SET nome = ? WHERE id = ?";
 		
+		try {
+			connectionFactory.open();
+			
+			PreparedStatement stmt = connectionFactory.getConnection().prepareStatement(sql);
+			
+			stmt.setString(1, obj.getNome());
+			stmt.setLong(2, obj.getId());
+			
+			stmt.execute();
+		} catch(Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			connectionFactory.close();			
+		}
 	}
 
 	@Override

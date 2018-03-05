@@ -8,8 +8,6 @@ public class IndexController {
 	
 	@RequestMapping("/")
 	public String abreIndex() {
-		System.out.println("Me chamou");
-		
 		return "index";
 	}
 

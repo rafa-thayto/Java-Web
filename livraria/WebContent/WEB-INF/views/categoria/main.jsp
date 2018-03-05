@@ -13,9 +13,11 @@
 	<a href="/livraria/app/">Voltar para pagina principal</a>
 	<c:url value="/app/categoria/salvar" var="urlSalvarCategoria" />
 	<form action="${ urlSalvarCategoria }" method="POST">
+		<%-- Cria um campo hidden para armazenar o id da categoria alterada --%>
+		<input type="hidden" name="id" value="${ categoria.id }">
 		<label>
 			Nome
-			<input type="text" name="nome">
+			<input type="text" name="nome" value="${ categoria.nome }">
 		</label>
 		<button type="submit">Salvar</button>
 	</form>
@@ -33,7 +35,9 @@
 				<tr>
 					<td>${ categoria.nome }</td>
 					<td>
-						<a href="#">Editar</a>
+						<c:url value="/app/categoria" var="urlEditar" />
+						<a href="${ urlEditar }?id=${ categoria.id 	}">Editar</a>
+						
 						<c:url value="/app/categoria/deletar" var="urlDeletar" />
 						<a href="${ urlDeletar }?id=${ categoria.id }">Remover</a>
 					</td>

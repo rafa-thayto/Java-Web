@@ -23,7 +23,7 @@ public class UsuarioDAO implements DAO<Usuario> {
 
 	@Override
 	public void inserir(Usuario obj) {
-		// TODO Auto-generated method stub
+		String sql = "INSERT INTO "
 		
 	}
 
