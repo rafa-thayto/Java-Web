@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- cria o DAO -->
+	<jsp:useBean id="dao" class="DAO.MusicaDAO" />
+	<table>
+		<!-- percorre contatos montando as linhas da tabela -->
+		<c:forEach var="musica" 
+		items="${dao.lista}">
+			<tr>
+				<td>${musica.nome}</td>
+				<td>${musica.cantor}</td>
+				<td><c:if test="${not empty musica.cantor}">
+		<b>${musica.cantor}</b>
+	</c:if> <c:if test="${empty musica.cantor}">
+			Cantor não informado
+	</c:if></td>
+				
+			</tr>
+		</c:forEach>
+	</table>
+	
+</body>
+</html>
