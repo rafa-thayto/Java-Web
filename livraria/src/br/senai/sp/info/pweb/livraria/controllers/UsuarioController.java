@@ -1,9 +1,13 @@
 package br.senai.sp.info.pweb.livraria.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +48,21 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/autenticar")
-	public String autenticar(Usuario usuario, HttpSession session) {
+	public String autenticar(Usuario usuario, HttpSession session, Model model) {
+		
+		List<String> erros = new ArrayList<>(10);
+		
+		if (usuario.getEmail() == null || usuario.getEmail().length() < 5 || usuario.getEmail().length() > 120) {
+			erros.add("O email é obrigatório e deve conter de 2 a 120 caracteres");
+		}
+		
+		if (usuario.getSenha() == null || usuario.getSenha().length() < 8 || usuario.getSenha().length() > 130) {
+			erros.add("A senha é obrigatória e deve conter de 5 a 30 caracteres");
+		}
+		
+		if (erros.isEmpty()) {
+			model.addAttribute("erros", erros);
+		}
 		
 		usuario.hashPassword();
 		
