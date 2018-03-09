@@ -44,7 +44,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/autenticar")
-	public String autenticar(Usuario usuario, HttpSession session) {
+	public String autenticar(Usuario usuario) {
 		
 		usuario.hashPassword();
 		

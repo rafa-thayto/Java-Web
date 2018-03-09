@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import br.com.senai.sp.informatica.mercadofamilia.dao.UsuarioDAO;
 import br.com.senai.sp.informatica.mercadofamilia.models.Usuario;
+import br.com.senai.sp.informatica.mercadofamilia.utils.SessionUtils;
 
 @Controller
 public class UsuarioController {
 	
 	@Autowired
 	private UsuarioDAO usuarioDAO;
-
+	@Autowired
+	private SessionUtils sessionUtils;
 	
 	/*
 	 * Request para a página
@@ -42,13 +44,18 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/autenticar")
-	public String autenticar () {
+	public String autenticar (Usuario usuario) {
+		
+		usuario.hashPassord();
+		
+		sessionUtils.setUsuarioLogado(usuario);;
+		
 		return "redirect:app/";
 	}
 	
 	@PostMapping("/sair")
-	public String sair (HttpSession httpSession) {
-		httpSession.invalidate();
+	public String sair () {
+		sessionUtils.killSession();
 		return "redirect:/";
 	}
 	
