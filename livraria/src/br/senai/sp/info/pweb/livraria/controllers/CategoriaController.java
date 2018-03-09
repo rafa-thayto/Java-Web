@@ -55,7 +55,7 @@ public class CategoriaController {
 		// Remove a categoria do banco de daods
 		categoriaDAO.delete(categoria);
 		
-		return "redirect:/app/categoria/novo";
+		return "redirect:/app/categoria";
 	}
 	
 	@PostMapping("/app/categoria/salvar")
