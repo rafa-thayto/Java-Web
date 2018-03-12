@@ -5,17 +5,18 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
+	
 	private Connection connection;
 	
-	public void open() throws ClassNotFoundException, SQLException{
-		// Setting jdbc driver
+	public void open() throws ClassNotFoundException, SQLException {
+		
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		// Setting user
 		final String USUARIO = "root";
 		final String SENHA = "root132";
 		
 		String sql = "jdbc:mysql://localhost:3306/mercado_familia?serverTimezone=UTC";
 		connection = DriverManager.getConnection(sql, USUARIO, SENHA);
+		
 	}
 	
 	public void close() {
@@ -31,4 +32,5 @@ public class ConnectionFactory {
 	public Connection getConnection() {
 		return connection;
 	}
+
 }
