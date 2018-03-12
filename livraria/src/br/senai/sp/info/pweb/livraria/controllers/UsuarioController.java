@@ -48,6 +48,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/autenticar")
+<<<<<<< HEAD
 	public String autenticar(Usuario usuario, HttpSession session, Model model) {
 		
 		List<String> erros = new ArrayList<>(10);
@@ -63,6 +64,9 @@ public class UsuarioController {
 		if (erros.isEmpty()) {
 			model.addAttribute("erros", erros);
 		}
+=======
+	public String autenticar(Usuario usuario) {
+>>>>>>> df367a87626c70343e73f2e9e6aab5938957542d
 		
 		usuario.hashPassword();
 		
