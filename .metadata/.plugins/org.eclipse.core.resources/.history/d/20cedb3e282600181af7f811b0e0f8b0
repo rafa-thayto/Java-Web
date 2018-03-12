@@ -1,0 +1,7 @@
+package br.com.senai.sp.informatica.tecnow.dao;
+
+public interface DAO<T> {
+
+	public T search(Long id);
+	
+}

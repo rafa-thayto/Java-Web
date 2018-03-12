@@ -1,0 +1,8 @@
+package br.com.senai.sp.informatica.tecnow.model;
+
+public class Game {
+
+	private String name;
+	private Category
+	
+}

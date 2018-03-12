@@ -1,0 +1,12 @@
+package br.com.senai.sp.informatica.mercadofamilia.dao;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class ConnectionFactory {
+	private Connection connection;
+	
+	public void open() throws ClassNotFoundException, SQLException{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+	}
+}
