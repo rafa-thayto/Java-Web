@@ -14,7 +14,7 @@ public class ConnectionFactory {
 		final String USUARIO = "root";
 		final String SENHA = "root132";
 		
-		String sql = "jdbc:mysql://localhost:3306/tecnow?serverTimezone=UTC";
+		String sql = "jdbc:mysql://localhost:3306/tecnow?useTimezone=true&serverTimezone=UTC";
 		connection = DriverManager.getConnection(sql, USUARIO, SENHA);
 		
 	}

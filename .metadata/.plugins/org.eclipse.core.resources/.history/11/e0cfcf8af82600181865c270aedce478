@@ -1,0 +1,30 @@
+package br.com.senai.sp.informatica.tecnow.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+
+	// Signup
+	@GetMapping("/signup")
+	public String openSignup() {
+		return "";
+	}
+	@PostMapping("/signup")
+	public String registeringUser() {
+		return "";
+	}
+	
+	// Login
+	@GetMapping("/login")
+	public String openLogin() {
+		return "";
+	}
+	
+	@PostMapping("/auth")
+	
+}
