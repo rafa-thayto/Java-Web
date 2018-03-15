@@ -1,5 +1,5 @@
 #Tomcat publish data
-#Tue Mar 13 16:58:12 BRT 2018
+#Thu Mar 15 12:54:54 BRT 2018
 org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\06929749974\\Desktop\\Java-Web\\mercado-familia\\WebContent\\WEB-INF\\lib\\spring-web-5.0.2.RELEASE.jar=WEB-INF/lib/spring-web-5.0.2.RELEASE.jar
 org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\06929749974\\Desktop\\Java-Web\\TecNow\\WebContent\\WEB-INF\\lib\\spring-web-5.0.2.RELEASE.jar=WEB-INF/lib/spring-web-5.0.2.RELEASE.jar
 org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\06929749974\\Desktop\\Java-Web\\livraria\\WebContent\\WEB-INF\\lib\\spring-web-5.0.2.RELEASE.jar=WEB-INF/lib/spring-web-5.0.2.RELEASE.jar
