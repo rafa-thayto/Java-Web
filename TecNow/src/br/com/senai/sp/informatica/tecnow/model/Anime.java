@@ -6,10 +6,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class Anime {
 
+	private Long id;
 	private String name;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date registerDate;
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
@@ -22,5 +29,7 @@ public class Anime {
 	public void setRegisterDate(Date registerDate) {
 		this.registerDate = registerDate;
 	}
+	
+	
 	
 }

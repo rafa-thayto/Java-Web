@@ -6,8 +6,8 @@ public interface DAO<T> {
 
 	public T search(Long id);
 	public List<T> searchAll();
-	public T add(T obj);
-	public T remove(T obj);
-	public T change(T obj);
+	public void insert(T obj);
+	public void remove(T obj);
+	public void change(T obj);
 	
 }

@@ -1,7 +1,0 @@
-package br.com.senai.sp.informatica.tecnow.dao;
-
-import br.com.senai.sp.informatica.tecnow.model.Game;
-
-public class GameDAO implements DAO<Game>{
-
-}

@@ -1,7 +1,0 @@
-package br.com.senai.sp.informatica.tecnow.dao;
-
-import br.com.senai.sp.informatica.tecnow.model.User;
-
-public class UserDAO implements DAO<User> {
-
-}

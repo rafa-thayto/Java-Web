@@ -8,6 +8,7 @@ import br.com.senai.sp.informatica.tecnow.utils.Gender;
 
 public class User {
 
+	private Long id;
 	private String name;
 	private String email;
 	private String password;
@@ -15,6 +16,12 @@ public class User {
 	private Date birthDate;
 	private Gender gender;
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
@@ -45,5 +52,6 @@ public class User {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
+	
 	
 }

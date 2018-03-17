@@ -1,7 +1,0 @@
-package br.com.senai.sp.informatica.tecnow.utils;
-
-public enum Category {
-	TIRO("Tiro"), RPG("RPG")
-	
-	publci Category()
-}

@@ -1,8 +1,0 @@
-package br.com.senai.sp.informatica.tecnow.config;
-
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
-public class WebConfig {
-
-}

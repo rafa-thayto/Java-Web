@@ -1,24 +1,6 @@
-<<<<<<< HEAD
 INDEX VERSION 1.4+C:\Users\Rafael\Documents\Github\repositories\java-web\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-657098817.index
-3700161847.index
-3380942118.index
-3225912753.index
-1389777979.index
-3675273300.index
-2114918677.index
-783421006.index
-=======
-INDEX VERSION 1.4+C:\Users\06929749974\Desktop\Java-Web\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3373825920.index
-3675273300.index
-946594090.index
-4171322037.index
-3700161847.index
-2217107222.index
-2879532028.index
-3466877280.index
 4010404357.index
+3700161847.index
 3225912753.index
-2450172318.index
->>>>>>> ffe3568da0d8467d91ebf0409f855c0b52433cd9
+2217107222.index
+3675273300.index
