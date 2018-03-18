@@ -28,8 +28,8 @@ public class UserController {
 	}
 	
 	@PostMapping("/auth")
-	public User auth(User user) {
-		return null;
+	public String auth(User user) {
+		return "redirect:app/";
 	}
 	
 }
