@@ -6,11 +6,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class Anime {
 
+	// Props
 	private Long id;
 	private String name;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date registerDate;
 	
+	// Getters and Setters
 	public Long getId() {
 		return id;
 	}

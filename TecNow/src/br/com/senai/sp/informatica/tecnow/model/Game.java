@@ -8,12 +8,14 @@ import br.com.senai.sp.informatica.tecnow.utils.Category;
 
 public class Game {
 
+	// Props
 	private Long id;
 	private String name;
 	private Category category;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date registerDate;
 	
+	// Getters and Setters
 	public Long getId() {
 		return id;
 	}

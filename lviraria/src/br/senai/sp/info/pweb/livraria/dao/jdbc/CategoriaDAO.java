@@ -118,7 +118,7 @@ public class CategoriaDAO implements DAO<Categoria>{
 			
 			fabrica.abrir();
 			
-			String sql = "Update categoria SET  nome = ? Where id = ?";
+			String sql = "Update categoria SET nome = ? Where id = ?";
 			
 			PreparedStatement stmt = fabrica.getConexao().prepareStatement(sql);
 			

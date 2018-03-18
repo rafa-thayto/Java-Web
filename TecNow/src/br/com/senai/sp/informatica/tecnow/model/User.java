@@ -8,6 +8,7 @@ import br.com.senai.sp.informatica.tecnow.utils.Gender;
 
 public class User {
 
+	// Props
 	private Long id;
 	private String name;
 	private String email;
@@ -16,6 +17,7 @@ public class User {
 	private Date birthDate;
 	private Gender gender;
 	
+	// Getters and Setters
 	public Long getId() {
 		return id;
 	}

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	
+	// Properties
 	private Connection connection;
 	
 	public void open() throws ClassNotFoundException, SQLException {
@@ -20,7 +21,7 @@ public class ConnectionFactory {
 	}
 	
 	public void close() {
-		if(connection != null) {
+		if(this.connection != null) {
 			try {
 				connection.close();
 			} catch (Exception e) {
