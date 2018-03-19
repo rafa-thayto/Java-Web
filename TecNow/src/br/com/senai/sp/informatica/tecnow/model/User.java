@@ -3,6 +3,7 @@ package br.com.senai.sp.informatica.tecnow.model;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.util.DigestUtils;
 
 import br.com.senai.sp.informatica.tecnow.utils.Gender;
 
@@ -16,6 +17,17 @@ public class User {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthDate;
 	private Gender gender;
+	
+	/**
+	 * This method encrypt the user password
+	 */
+	public void hashPassword() {
+		try {
+			this.password = DigestUtils.md5DigestAsHex(this.password.getBytes("UTF-8"));
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
 	
 	// Getters and Setters
 	public Long getId() {
