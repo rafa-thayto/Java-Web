@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import br.com.senai.sp.informatica.tecnow.model.User;
+import br.com.senai.sp.informatica.tecnow.utils.Gender;
 
 @Repository
 public class UserDAO implements DAO<User> {
@@ -22,29 +23,30 @@ public class UserDAO implements DAO<User> {
 	 * @return
 	 */
 	public User auth(User user) {
-		String sql = "SELECT id, nome, email, senha, data_nascimento WHERE id = ? and senha = ?"; // TODO: genero
+		String sql = "SELECT * WHERE id = ? and senha = ?";
 		try {
 			this.connection.open();
 			
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement(sql);
 			stmt.setLong(1, user.getId());
 			
-			ResultSet result = stmt.executeQuery();
+			ResultSet rs = stmt.executeQuery();
 			User authUser = null;
 			
-			if (result.next()) {
+			if (rs.next()) {
 				authUser = new User();
 				// Pegando dados do usuario
-				authUser.setId(result.getLong("id"));
-				authUser.setName(result.getString("nome"));
-				authUser.setEmail(result.getString("email"));
-				authUser.setPassword(result.getString("email"));
-				authUser.setBirthDate(result.getDate("data_nascimento"));
+				authUser.setId(rs.getLong("id"));
+				authUser.setName(rs.getString("nome"));
+				authUser.setEmail(rs.getString("email"));
+				authUser.setPassword(rs.getString("email"));
+				authUser.setBirthDate(rs.getDate("data_nascimento"));
+				authUser.setGender(Gender.valueOf(rs.getString("genero")));
 				
 				authUser.setEmail(user.getEmail());
 				authUser.setPassword(user.getPassword());
 			}
-			result.close();
+			rs.close();
 			
 			return authUser;
 			
@@ -65,8 +67,34 @@ public class UserDAO implements DAO<User> {
 
 	@Override
 	public List<User> searchAll() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM usuario";
+		List<User> userList = new ArrayList<>();
+		
+		try {
+			this.connection.open();
+			
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				User user = new User();
+				user.setId(rs.getLong("id"));
+				user.setName(rs.getString("nome"));
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("senha"));
+				user.setBirthDate(rs.getDate("data_nascimento"));
+				user.setGender(Gender.valueOf(rs.getString("genero")));
+				
+				userList.add(user);
+			}
+			
+			return userList;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			this.connection.close();
+		}
+		
 	}
 	
 	@Override
@@ -103,10 +131,9 @@ public class UserDAO implements DAO<User> {
 
 	@Override
 	public void insert(User obj) {
-//		TODO: Fix genero
-		String sql = "INSERT INTO usuario SET nome = ?, email = ?, senha = ?, data_nascimento = ?"; // , genero = ?
+		String sql = "INSERT INTO usuario SET nome = ?, email = ?, senha = ?, data_nascimento = ?, genero = ?"; 
 		try {
-			// Criando uma conex�o com o banco de dados
+			// Criando uma conexao com o banco de dados
 			this.connection.open();
 			
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement(sql);
@@ -114,6 +141,7 @@ public class UserDAO implements DAO<User> {
 			stmt.setString(2, obj.getEmail());
 			stmt.setString(3, obj.getPassword());
 			stmt.setDate(4, new Date(obj.getBirthDate().getTime()));
+			stmt.setString(5, obj.getGender().toString());
 			stmt.execute();
 			
 		} catch (Exception e) {
@@ -142,7 +170,7 @@ public class UserDAO implements DAO<User> {
 
 	@Override
 	public void change(User obj) {
-		String sql = "UPDATE usuario SET nome = ?, email = ?, senha = ?, data_nascimento = ? WHERE id = ?";
+		String sql = "UPDATE usuario SET nome = ?, email = ?, senha = ?, data_nascimento = ?, genero = ? WHERE id = ?";
 		try {
 			this.connection.open();
 			
@@ -151,6 +179,8 @@ public class UserDAO implements DAO<User> {
 			stmt.setString(2, obj.getEmail());
 			stmt.setString(3, obj.getPassword());
 			stmt.setDate(4, new Date(obj.getBirthDate().getTime()));
+			stmt.setString(5, obj.getGender().toString());
+			stmt.setLong(6, obj.getId());
 			stmt.execute();
 
 		} catch (Exception e) {

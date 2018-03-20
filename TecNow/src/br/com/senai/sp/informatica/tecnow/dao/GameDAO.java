@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import br.com.senai.sp.informatica.tecnow.model.Game;
+import br.com.senai.sp.informatica.tecnow.utils.Category;
 
 @Repository
 public class GameDAO implements DAO<Game>{
@@ -30,7 +31,7 @@ public class GameDAO implements DAO<Game>{
 	
 	@Override
 	public List<Game> searchAllBy(Game obj) {
-		String sql = "SELECT * FROM jogo WHERE id = ?"; // TODO: categoria
+		String sql = "SELECT * FROM jogo WHERE id = ?";
 		
 		List<Game> gameList = new ArrayList<>();
 		try {
@@ -44,7 +45,7 @@ public class GameDAO implements DAO<Game>{
 				Game game = new Game();
 				game.setId(rs.getLong("id"));
 				game.setName(rs.getString("nome"));
-//				game.setCategory(rs.);
+				game.setCategory(Category.valueOf(rs.getString("categoria")));
 				game.setRegisterDate(rs.getDate("data_cadastro"));
 				
 				gameList.add(game);
@@ -61,14 +62,14 @@ public class GameDAO implements DAO<Game>{
 
 	@Override
 	public void insert(Game obj) {
-		// TODO: Fix categoria
-		String sql = "INSERT INTO jogos SET nome = ?, data_cadastro = ?"; //, categoria = ?
+		String sql = "INSERT INTO jogos SET nome = ?, data_cadastro = ?, categoria = ?";
 		try {
 			this.connection.open();
 			
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement(sql);
 			stmt.setString(1, obj.getName());
 			stmt.setDate(2, new Date(obj.getRegisterDate().getTime()));
+			stmt.setString(3, obj.getCategory().toString());
 			stmt.execute();
 			
 		} catch (Exception e) {
@@ -97,13 +98,14 @@ public class GameDAO implements DAO<Game>{
 
 	@Override
 	public void change(Game obj) {
-		String sql = "UPDATE jogo SET nome = ? WHERE id = ?"; // TODO: categoria = ?
+		String sql = "UPDATE jogo SET nome = ?, categoria = ? WHERE id = ?"; 
 		try {
 			this.connection.open();
 			
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement(sql);
 			stmt.setString(1, obj.getName());
-			stmt.setLong(2, obj.getId());
+			stmt.setString(2, obj.getCategory().toString());
+			stmt.setLong(3, obj.getId());
 			stmt.execute();
 			
 		} catch (Exception e) {
