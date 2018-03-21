@@ -9,8 +9,8 @@
 	<c:import url="../templates/css-imports.jsp"></c:import>
 	<title>Cadastre-se | TecNow Brasil</title>
 </head>
-<body>
-	<div class="wrapper row">
+<body class="h-100vh">
+	<div class="wrapper">
 		<div class="col-sm-12 col-md-8">
 		
 			<!-- Form Signup -->
@@ -30,7 +30,7 @@
 							<input type="text" name="name" id="inputName" class="form-control">
 						</div>
 					</div> <!-- End Input Name -->
-	
+
 					<!-- Input Email -->
 					<div class="input-group mb-3">
 						<label for="inputPassword"></label>

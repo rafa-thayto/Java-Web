@@ -8,8 +8,19 @@
 	<c:import url="./templates/css-imports.jsp"></c:import>
 	<title>TecNow Brasil</title>
 </head>
-<body>
-	<h1>Index</h1>
+<body class="h-100vh">
+
+	<div class="wrapper">
+		<div class="col-md-12">
+			<div class="tab-group">´
+				<a href="user/login" class="tab tab--active">Login</a>
+				<a href="user/signup" class="tab">Cadastro</a>	
+			</div>
+			
+
+
+		</div>
+	</div>
 
 	<c:import url="./templates/js-imports.jsp"></c:import>
 </body>

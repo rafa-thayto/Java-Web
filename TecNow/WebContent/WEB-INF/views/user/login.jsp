@@ -8,9 +8,9 @@
 	<c:import url="../templates/css-imports.jsp"></c:import>
 	<title>Login | TecNow Brasil</title>
 </head>
-<body>
+<body class="h-100vh">
 	
-	<div class="wrapper row">
+	<div class="wrapper">
 		<div class="col-sm-12 col-md-8">
 		
 		<a class="active"> Sign In </h2>

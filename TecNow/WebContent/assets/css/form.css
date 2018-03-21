@@ -1,17 +1,17 @@
 /* Form */
-.tab-group {
+.tab__group {
   list-style: none;
   padding: 0;
   margin: 0 0 40px 0;
 }
 
-.tab-group:after {
+.tab__group:after {
   content: "";
   display: table;
   clear: both;
 }
 
-.tab-group li a {
+.tab__group .tab__item a {
   display: block;
   text-decoration: none;
   padding: 15px;
@@ -26,16 +26,16 @@
   transition: .5s ease;
 }
 
-.tab-group li a:hover {
+.tab__group .tab__item a:hover {
   background: #179b77;
   color: #ffffff;
 }
 
-.tab-group .active a {
+.tab__group .tab__item--active a {
   background: #1ab188;
   color: #ffffff;
 }
 
-.tab-content > div:last-child {
+.tab__content > div:last-child {
   display: none;
 }
