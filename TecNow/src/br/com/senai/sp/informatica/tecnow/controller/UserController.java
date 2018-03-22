@@ -32,20 +32,19 @@ public class UserController {
 	// Register User
 	@PostMapping("/signup")
 	public String registeringUser(User user) {
-		user.hashPassword();
 		System.out.println("Usuario: " + user + "cadastrado com sucesso!");
 		userDAO.insert(user);
 		
-		return "index";
+		return "redirect:/";
 	} // End Signup
 	
 	// Logout
-	@PostMapping("/logout")
+	@GetMapping("/logout")
 	public String logout() {
-		
+		System.out.println("Logout");
 		sessionUtils.killSession();
 		
-		return "index";
+		return "redirect:/";
 	} // End Logout
 	
 	// Login
@@ -60,22 +59,18 @@ public class UserController {
 		// Store errors
 		List<String> errors = new ArrayList<>(10);
 		
-		if (user.getEmail() == null ||
-			user.getEmail().length() < 5 ||
-			user.getEmail().length() > 120) {
-			errors.add("O email é obrigatório e deve conter de 5 a 120 caracteres!");
+		if (user.getEmail().isEmpty()) {
+			errors.add("O email é obrigatório!");
 		}
-		if (user.getPassword() == null) {
+		if (user.getPassword().isEmpty()) {
 			errors.add("A senha é obrigatória!");
 		}
 		if (!errors.isEmpty()) {
 			System.out.println("Erros: " + errors);
 			model.addAttribute("errors", errors);
-			return "usuario/login";
+			return "user/login";
 		}
 		// End
-		
-		user.hashPassword();
 		
 		User authUser = userDAO.auth(user);
 		
@@ -87,7 +82,7 @@ public class UserController {
 		sessionUtils.setLoggedUser(authUser);
 		
 		
-		return "redirect:app/";
+		return "redirect:/app/home";
 	}
 	// End Login
 	

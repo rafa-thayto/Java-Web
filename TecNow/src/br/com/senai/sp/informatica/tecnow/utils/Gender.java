@@ -2,7 +2,8 @@ package br.com.senai.sp.informatica.tecnow.utils;
 
 public enum Gender {
 	MASCULINO("Masculino"), 
-	FEMININO("Feminino");
+	FEMININO("Feminino"),
+	OUTRO("Outro");
 	
 	private String description;
 	

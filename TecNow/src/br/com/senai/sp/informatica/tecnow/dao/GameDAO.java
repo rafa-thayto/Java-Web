@@ -17,6 +17,11 @@ public class GameDAO implements DAO<Game>{
 	// Properties
 	private ConnectionFactory connection;
 	
+	//Constructor
+	public GameDAO() {
+		this.connection = new ConnectionFactory();
+	}
+	
 	@Override
 	public Game search(Long id) {
 		// TODO Auto-generated method stub
@@ -62,14 +67,14 @@ public class GameDAO implements DAO<Game>{
 
 	@Override
 	public void insert(Game obj) {
-		String sql = "INSERT INTO jogos SET nome = ?, data_cadastro = ?, categoria = ?";
+		String sql = "INSERT INTO jogo SET nome = ?, data_cadastro = ?, categoria = ?";
 		try {
 			this.connection.open();
 			
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement(sql);
 			stmt.setString(1, obj.getName());
 			stmt.setDate(2, new Date(obj.getRegisterDate().getTime()));
-			stmt.setString(3, obj.getCategory().toString());
+			stmt.setString(3, obj.getCategory().getDescription());
 			stmt.execute();
 			
 		} catch (Exception e) {
@@ -104,7 +109,7 @@ public class GameDAO implements DAO<Game>{
 			
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement(sql);
 			stmt.setString(1, obj.getName());
-			stmt.setString(2, obj.getCategory().toString());
+			stmt.setString(2, obj.getCategory().getDescription());
 			stmt.setLong(3, obj.getId());
 			stmt.execute();
 			

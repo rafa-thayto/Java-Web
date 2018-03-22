@@ -15,7 +15,7 @@
 		
 			<div class="tab__group">
 				<a href="user/login" class="tab__item tab__item--active">Login</a>
-				<a href="user/signup" class="tab__item">Cadastro</a>
+				<a href="user/signup" class="tab__item tab__item--active">Cadastro</a>
 			</div>
 
 		</div>

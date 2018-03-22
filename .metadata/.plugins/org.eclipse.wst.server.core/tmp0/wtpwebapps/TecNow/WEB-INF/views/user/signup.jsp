@@ -85,9 +85,9 @@
 							</div>
 						    <select name="gender" class="form-control" id="genderSelect">
 						      	<option selected disabled>-- Selecione um Gênero --</option>
-						      	<option value="Feminino">Feminino</option>
-						      	<option value="Masculino">Masculino</option>
-						      	<option value="Outro">Outro</option>
+						      	<option value="FEMININO">Feminino</option>
+						      	<option value="MASCULINO">Masculino</option>
+						      	<option value="OUTRO">Outro</option>
 						    </select>
 					    </div>
 					</div> <!-- End Gender Select -->
@@ -99,7 +99,7 @@
 				</form>
 			</div> <!-- End Form Signup -->
 			
-		</div> <!-- End col-sm-12 col-md-8 -->
+		</div> <!-- End col-sm-12 col-md-10 col-lg-7 -->
 	</div> <!-- End Wrapper -->
 	
 	<%-- JavaScript imports --%>

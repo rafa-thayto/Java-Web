@@ -57,7 +57,7 @@
 				</form>
 			</div> <!-- End Form Login -->
 		
-		</div> <!-- End col-sm-12 col-md-8 -->
+		</div> <!-- End col-sm-12 col-md-10 col-lg-7 -->
 	</div> <!-- End Wrapper -->	
 	
 	<c:import url="../templates/js-imports.jsp"></c:import>

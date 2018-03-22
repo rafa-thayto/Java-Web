@@ -17,18 +17,24 @@ public class UserDAO implements DAO<User> {
 	// Properties
 	private ConnectionFactory connection;
 	
+	// Contructor
+	public UserDAO() {
+		this.connection = new ConnectionFactory();
+	}
+	
 	/**
 	 * This method authenticates user in the session
 	 * @param user
 	 * @return
 	 */
 	public User auth(User user) {
-		String sql = "SELECT * WHERE id = ? and senha = ?";
+		String sql = "SELECT * FROM usuario WHERE email = ? and senha = ?";
 		try {
 			this.connection.open();
 			
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement(sql);
-			stmt.setLong(1, user.getId());
+			stmt.setString(1, user.getEmail());
+			stmt.setString(2, user.getPassword());
 			
 			ResultSet rs = stmt.executeQuery();
 			User authUser = null;
@@ -41,22 +47,18 @@ public class UserDAO implements DAO<User> {
 				authUser.setEmail(rs.getString("email"));
 				authUser.setPassword(rs.getString("email"));
 				authUser.setBirthDate(rs.getDate("data_nascimento"));
-				authUser.setGender(Gender.valueOf(rs.getString("genero")));
 				
 				authUser.setEmail(user.getEmail());
 				authUser.setPassword(user.getPassword());
 			}
 			rs.close();
-			
 			return authUser;
-			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			throw new RuntimeException(e);
 		} finally {
 			this.connection.close();
 		}
 		
-		return user;
 	}
 	
 	@Override
@@ -114,7 +116,7 @@ public class UserDAO implements DAO<User> {
 				user.setId(rs.getLong("id"));
 				user.setEmail(rs.getString("email"));
 				user.setPassword(rs.getString("senha"));
-//				user.setGender(gender);
+				user.setGender(Gender.valueOf(rs.getString("genero")));
 				user.setBirthDate(rs.getDate("data_nascimento"));
 				
 				userList.add(user);
@@ -132,16 +134,18 @@ public class UserDAO implements DAO<User> {
 	@Override
 	public void insert(User obj) {
 		String sql = "INSERT INTO usuario SET nome = ?, email = ?, senha = ?, data_nascimento = ?, genero = ?"; 
+		System.out.println(obj);
 		try {
 			// Criando uma conexao com o banco de dados
 			this.connection.open();
+			
 			
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement(sql);
 			stmt.setString(1, obj.getName());
 			stmt.setString(2, obj.getEmail());
 			stmt.setString(3, obj.getPassword());
 			stmt.setDate(4, new Date(obj.getBirthDate().getTime()));
-			stmt.setString(5, obj.getGender().toString());
+			stmt.setString(5, obj.getGender().getDescription());
 			stmt.execute();
 			
 		} catch (Exception e) {
@@ -179,7 +183,7 @@ public class UserDAO implements DAO<User> {
 			stmt.setString(2, obj.getEmail());
 			stmt.setString(3, obj.getPassword());
 			stmt.setDate(4, new Date(obj.getBirthDate().getTime()));
-			stmt.setString(5, obj.getGender().toString());
+			stmt.setString(5, obj.getGender().getDescription());
 			stmt.setLong(6, obj.getId());
 			stmt.execute();
 
