@@ -7,6 +7,7 @@
 	<%-- Header and CSS imports --%>
 	<c:import url="../templates/header.jsp"></c:import>
 	<c:import url="../templates/css-imports.jsp"></c:import>
+	<link rel="stylesheet" href="../../../assets/css/main.css">
 	<title>Cadastre-se | TecNow Brasil</title>
 </head>
 <body class="h-100vh">
@@ -20,38 +21,70 @@
 	
 					<!-- Input Name -->
 					<div class="form-group">
-						<label for="inputName"></label>
+						<label for="inputName">Nome</label>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span class="input-group-text">
 									<i class="fas fa-user"></i>
 								</span>
 							</div>
-							<input type="text" name="name" id="inputName" class="form-control">
+							<input type="text" name="name" id="inputName" class="form-control" placeholder="Nome">
 						</div>
 					</div> <!-- End Input Name -->
 
 					<!-- Input Email -->
-					<div class="input-group mb-3">
-						<label for="inputPassword"></label>
-						<div class="input-group-prepend">
-							<span class="input-group-text">
-								<i class="fas fa-envelope"></i>
-							</span>
+					<div class="form-group">
+						<label for="inputEmail">Email</label>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fas fa-envelope"></i>
+								</span>
+							</div>
+							<input type="email" name="password" id="inputEmail" class="form-control" placeholder="Email">
 						</div>
-						<input type="email" name="password" id="inputPassword" class="form-control">
 					</div> <!-- End Input Email -->
 	
 					<!-- Input Password -->
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text">
-								<i class="fas fa-lock"></i>
-							</span>
+					<div class="form-group">
+						<label for="inputPassword">Password</label>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fas fa-lock"></i>
+								</span>
+							</div>
+							<input type="password" name="password" id="inputPassword" class="form-control" placeholder="********">
 						</div>
-						<input type="password" name="password" id="name" class="form-control">
 					</div> <!-- End Input Password -->
-	
+					
+					<!-- Input Date -->
+					<div class="form-group">
+						<label for="inputBirthDate">Data de Nascimento</label>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fas fa-calendar-check"></i>
+								</span>
+							</div>
+							<input type="date" name="birthDate" id="inputBirthDate" class="form-control" placeholder="dd/mm/aaaa">
+						</div> 
+					</div><!-- End Input Date-->
+					
+					<!-- Gender Select -->
+					<div class="form-group">
+					    <label for="genderSelect">Gênero</label>
+					    <select class="form-control" id="genderSelect">
+					      	<option selected disabled>-- Selecione um Gênero --</option>
+					      	<option value="Feminino">Feminino</option>
+					      	<option value="Masculino">Masculino</option>
+					      	<option value="Outro">Outro</option>
+					    </select>
+					</div> <!-- End Gender Select -->
+					
+					<div class="form-group mb-3">
+						<button type="submit" class="btn btn-primary">Cadastrar</button>
+					</div>
 				</form>
 			</div> <!-- End Form Signup -->
 			

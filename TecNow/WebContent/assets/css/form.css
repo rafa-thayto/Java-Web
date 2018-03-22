@@ -11,7 +11,7 @@
   clear: both;
 }
 
-.tab__group .tab__item a {
+.tab__group .tab__item {
   display: block;
   text-decoration: none;
   padding: 15px;
@@ -26,16 +26,12 @@
   transition: .5s ease;
 }
 
-.tab__group .tab__item a:hover {
+.tab__group .tab__item:hover {
   background: #179b77;
   color: #ffffff;
 }
 
-.tab__group .tab__item--active a {
+.tab__group .tab__item--active {
   background: #1ab188;
   color: #ffffff;
-}
-
-.tab__content > div:last-child {
-  display: none;
 }

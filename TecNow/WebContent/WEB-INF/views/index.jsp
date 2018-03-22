@@ -6,18 +6,18 @@
 <head>
 	<c:import url="./templates/header.jsp"></c:import>
 	<c:import url="./templates/css-imports.jsp"></c:import>
+	<link rel="stylesheet" href="../../assets/css/main.css">
 	<title>TecNow Brasil</title>
 </head>
 <body class="h-100vh">
 
 	<div class="wrapper">
 		<div class="col-md-12">
-			<div class="tab-group">´
-				<a href="user/login" class="tab tab--active">Login</a>
-				<a href="user/signup" class="tab">Cadastro</a>	
+		
+			<div class="tab__group">
+				<a href="user/login" class="tab__item tab__item--active">Login</a>
+				<a href="user/signup" class="tab__item">Cadastro</a>
 			</div>
-			
-
 
 		</div>
 	</div>

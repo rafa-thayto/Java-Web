@@ -6,6 +6,7 @@
 <head>
 	<c:import url="../templates/header.jsp"></c:import>
 	<c:import url="../templates/css-imports.jsp"></c:import>
+	<link rel="stylesheet" href="../../../assets/css/main.css">
 	<title>Login | TecNow Brasil</title>
 </head>
 <body class="h-100vh">
@@ -22,24 +23,29 @@
 				<form action="${ urlAuthUser }" method="POST">
 
 					<!-- Input Email -->
-					<div class="input-group mb-3">
-						<label for="inputPassword"></label>
-						<div class="input-group-prepend">
-							<span class="input-group-text">
-								<i class="fas fa-envelope"></i>
-							</span>
+					<div class="form-group">
+						<label for="inputEmail">Email</label>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fas fa-envelope"></i>
+								</span>
+							</div>
+							<input type="email" name="password" id="inputEmail" class="form-control" placeholder="Email">
 						</div>
-						<input type="email" name="password" id="inputPassword" class="form-control">
 					</div> <!-- End Input Email -->
 
 					<!-- Input Password -->
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text">
-								<i class="fas fa-lock"></i>
-							</span>
+					<div class="form-group">
+						<label for="inputPassoword">Senha</label>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fas fa-lock"></i>
+								</span>
+							</div>
+							<input type="password" name="password" id="inputPassword" class="form-control" placeholder="********">´
 						</div>
-						<input type="password" name="password" id="name" class="form-control">
 					</div> <!-- End Input Password -->
 					
 				</form>

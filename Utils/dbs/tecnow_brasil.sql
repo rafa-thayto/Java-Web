@@ -29,3 +29,5 @@ create table anime (
 insert into usuario (nome, email, senha, data_nascimento, genero) values ('admin', 'admin@email.com', 'admin', curdate(), 'Outro');
 
 select * from usuario;
+select * from anime;
+select * from jogo;
