@@ -15,8 +15,8 @@
 		
 			<div id="games">
 				<div class="tab__group">
-					<a href="animes" class="tab__item tab__item--active">Animes</a>
-					<a href="jogos" class="tab__item">Jogos</a>
+					<a href="animes" class="tab__item">Animes</a>
+					<a href="jogos" class="tab__item tab__item--active">Jogos</a>
 				</div>
 			</div>
 		</div>

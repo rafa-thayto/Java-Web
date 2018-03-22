@@ -14,8 +14,11 @@
 		<div class="col-md-12">
 		
 			<div class="tab__group">
-				<a href="animes" class="tab__item tab__item--active">Animes</a>
-				<a href="jogos" class="tab__item">Jogos</a>
+				<a href="animes" class="tab__item tab__item--active">Lista de Animes</a>
+				<a href="jogos" class="tab__item tab__item--active">Lista de Jogos</a>
+				<a href="animes/cadastro" class="tab__item tab__item--active">Cadastro de Animes</a>
+				<a href="jogos/cadastro" class="tab__item tab__item--active">Cadastro de Jogos</a>
+				
 				<c:url value="/user/logout" var="userLogout"></c:url>
 				<a href="${ userLogout }" class="tab__item">Sair</a>
 			</div>

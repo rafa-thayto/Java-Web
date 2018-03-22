@@ -16,6 +16,11 @@ public class AnimeDAO implements DAO<Anime> {
 	// Properties
 	private ConnectionFactory connection;
 	
+	// Contructor
+	public AnimeDAO() {
+		this.connection = new ConnectionFactory(); 
+	}
+	
 	@Override
 	public Anime search(Long id) {
 		// TODO Auto-generated method stub
