@@ -1,0 +1,15 @@
+.btn-success {
+    color: #fff !important;
+    background-color: #1ab188 !important;
+    border-color: #1ab188 !important;
+}
+
+.btn-success:hover {
+    color: #fff !important;
+    background-color: #158a6a !important;
+    border-color: #148969 !important;
+}
+
+.btn-success.focus, .btn-success:focus {
+    box-shadow: 0 0 0 .2rem #1ab18899 !important;
+}

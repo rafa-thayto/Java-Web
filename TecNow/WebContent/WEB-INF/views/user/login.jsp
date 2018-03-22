@@ -6,20 +6,22 @@
 <head>
 	<c:import url="../templates/header.jsp"></c:import>
 	<c:import url="../templates/css-imports.jsp"></c:import>
-	<link rel="stylesheet" href="../../../assets/css/main.css">
 	<title>Login | TecNow Brasil</title>
 </head>
 <body class="h-100vh">
 	
 	<div class="wrapper">
-		<div class="col-sm-12 col-md-8">
+		<div class="col-sm-12 col-md-10 col-lg-7 wrapper__content">
 		
-		<a class="active"> Sign In </h2>
-
 			<!-- Form login -->
 			<div id="login">
-
-				<c:url value="/TecNow/user/auth" var="urlAuthUser"></c:url>
+				
+				<div class="tab__group">
+					<a href="login" class="tab__item tab__item--active">Login</a>
+					<a href="signup" class="tab__item">Cadastro</a>
+				</div>
+				
+				<c:url value="/user/auth" var="urlAuthUser"></c:url>
 				<form action="${ urlAuthUser }" method="POST">
 
 					<!-- Input Email -->
@@ -31,7 +33,7 @@
 									<i class="fas fa-envelope"></i>
 								</span>
 							</div>
-							<input type="email" name="password" id="inputEmail" class="form-control" placeholder="Email">
+							<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email">
 						</div>
 					</div> <!-- End Input Email -->
 
@@ -47,6 +49,10 @@
 							<input type="password" name="password" id="inputPassword" class="form-control" placeholder="********">´
 						</div>
 					</div> <!-- End Input Password -->
+					
+					<div class="form-group mt-3 mb-3 d-flex justify-content-center">
+						<button type="submit" class="btn btn__form btn-success">Login</button>
+					</div>
 					
 				</form>
 			</div> <!-- End Form Login -->

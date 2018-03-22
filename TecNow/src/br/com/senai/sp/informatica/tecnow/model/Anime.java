@@ -12,6 +12,11 @@ public class Anime {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date registerDate;
 	
+	@Override
+	public String toString() {
+		return "Anime [id=" + id + ", name=" + name + ", registerDate=" + registerDate + "]";
+	}
+	
 	// Getters and Setters
 	public Long getId() {
 		return id;

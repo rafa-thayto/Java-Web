@@ -6,7 +6,7 @@
 <head>
 	<c:import url="./templates/header.jsp"></c:import>
 	<c:import url="./templates/css-imports.jsp"></c:import>
-	<title>TecNow Brasil</title>
+	<title>Home | TecNow Brasil</title>
 </head>
 <body class="h-100vh">
 
@@ -14,8 +14,9 @@
 		<div class="col-md-12">
 		
 			<div class="tab__group">
-				<a href="user/login" class="tab__item tab__item--active">Login</a>
-				<a href="user/signup" class="tab__item">Cadastro</a>
+				<a href="animes" class="tab__item tab__item--active">Animes</a>
+				<a href="jogos" class="tab__item">Jogos</a>
+				<a href="/user/logout" class="tab__item">Sair</a>
 			</div>
 
 		</div>

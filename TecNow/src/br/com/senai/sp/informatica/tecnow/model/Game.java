@@ -15,6 +15,11 @@ public class Game {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date registerDate;
 	
+	@Override
+	public String toString() {
+		return "Game [id=" + id + ", name=" + name + ", category=" + category + ", registerDate=" + registerDate + "]";
+	}
+	
 	// Getters and Setters
 	public Long getId() {
 		return id;

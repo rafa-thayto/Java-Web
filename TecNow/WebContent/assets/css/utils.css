@@ -8,6 +8,14 @@
   min-height: 100%;
 }
 
+.wrapper__content {
+	background: #FFFC;
+	width: 100%;
+	height: 100%;
+	border-radius: .25rem;
+	padding: 10px;
+}
+
 .h-100vh {
   height: 100vh;
 }

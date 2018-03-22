@@ -21,7 +21,7 @@ public class ConnectionFactory {
 	}
 	
 	public void close() {
-		if(this.connection != null) {
+		if(connection != null) {
 			try {
 				connection.close();
 			} catch (Exception e) {

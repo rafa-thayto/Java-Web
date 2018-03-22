@@ -29,6 +29,12 @@ public class User {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", birthDate="
+				+ birthDate + ", gender=" + gender + "]";
+	}
+
 	// Getters and Setters
 	public Long getId() {
 		return id;

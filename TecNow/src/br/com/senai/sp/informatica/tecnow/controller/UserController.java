@@ -39,6 +39,15 @@ public class UserController {
 		return "index";
 	} // End Signup
 	
+	// Logout
+	@PostMapping("/logout")
+	public String logout() {
+		
+		sessionUtils.killSession();
+		
+		return "index";
+	} // End Logout
+	
 	// Login
 	@GetMapping("/login")
 	public String openLogin() {

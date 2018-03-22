@@ -12,4 +12,9 @@ public class IndexController {
 		return "index";
 	}
 	
+	@RequestMapping("/app/home") 
+	public String appHome() {
+		return "home";
+	}
+	
 }

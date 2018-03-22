@@ -6,7 +6,6 @@
 <head>
 	<c:import url="./templates/header.jsp"></c:import>
 	<c:import url="./templates/css-imports.jsp"></c:import>
-	<link rel="stylesheet" href="../../assets/css/main.css">
 	<title>TecNow Brasil</title>
 </head>
 <body class="h-100vh">
