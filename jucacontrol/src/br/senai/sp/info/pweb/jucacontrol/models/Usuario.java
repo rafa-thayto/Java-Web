@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.util.DigestUtils;
 
@@ -19,18 +22,28 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull
 	private TiposUsuario tipo = TiposUsuario.COMUM;
 	
 	@Column(length = 30, nullable = false, unique = false)
+	@NotNull
+	@Size(min = 1, max = 30)
 	private String nome;
 	
 	@Column(length = 50, nullable = false, unique = false)
+	@NotNull
+	@Size(min = 1, max = 50)
 	private String sobrenome;
 	
 	@Column(length = 120, nullable = false, unique = true)
+	@NotNull
+	@Email
+	@Size(min = 1, max = 120)
 	private String email;
 	
 	@Column(length = 64, nullable = false, unique = false)
+	@NotNull
+	@Size(min = 6, max = 20)
 	private String senha;
 	
 	@Transient

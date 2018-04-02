@@ -3,9 +3,11 @@ package br.senai.sp.info.pweb.jucacontrol.controllers;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,8 +68,14 @@ public class UsuarioController {
 	@PostMapping({"/usuario/autenticar"})
 	//@Valid - DEtermina que o Spring deve validar o objeto
 	//BindingResult - Armazena os possíveis erros de validação que ocorreram no objeto
-	public String autenticar(Usuario usuario) {
+	public String autenticar(@Valid Usuario usuario, BindingResult brUsuario) {
 
+		// Verificando se houveram erros no binding result
+		if (brUsuario.hasFieldErrors("email") || brUsuario.hasFieldErrors("senha")) {
+			System.out.println("Capturou os erros");
+			return "index";
+		}
+		
 		return "redirect:/app/";
 	}
 	
