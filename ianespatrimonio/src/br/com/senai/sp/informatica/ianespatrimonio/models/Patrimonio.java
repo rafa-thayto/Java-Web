@@ -17,5 +17,12 @@ public class Patrimonio {
 	
 	@Column()
 	private Date data_movimentacao;
+
+	public Patrimonio(Long id, String nome, Date data_movimentacao) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.data_movimentacao = data_movimentacao;
+	}
 	
 }

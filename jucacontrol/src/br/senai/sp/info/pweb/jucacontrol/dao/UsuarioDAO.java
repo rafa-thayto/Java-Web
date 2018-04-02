@@ -10,6 +10,7 @@ public interface UsuarioDAO {
 	public List<Usuario> buscarTodos();
 	public void deletar(Usuario obj);
 	public Usuario buscarId(Long id);
-	public void alterar(Long id);
+	public void alterar(Usuario obj);
+	public Usuario buscarPorEmail(String email);
 	
 }

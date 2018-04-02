@@ -6,7 +6,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import br.senai.sp.info.pweb.jucacontrol.dao.UsuarioDAO;
-import br.senai.sp.info.pweb.jucacontrol.dao.jpa.UsuarioJPA;
 import br.senai.sp.info.pweb.jucacontrol.models.TiposUsuario;
 import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 
@@ -14,7 +13,7 @@ import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 public class CriarAdministradorJob implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired
-	private UsuarioDAO usuarioJPA; 
+	private UsuarioDAO usuarioDAO; 
 	
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -29,9 +28,14 @@ public class CriarAdministradorJob implements ApplicationListener<ContextRefresh
 		admin.setTipo(TiposUsuario.ADMINISTRADOR);
 		admin.hashearSenha();
 		
-		System.out.println();
-		usuarioJPA.persistir(admin);
-		System.out.println();
+		System.out.println("[JOB]: Verificando existência no usuário administrador...");
+		if (usuarioDAO.buscarPorEmail(admin.getEmail()) == null) {
+			System.out.println("[JOB]: Criando usuário administrador...");
+			usuarioDAO.persistir(admin);
+		} else {
+			System.out.println("[JOB]: Administrador já existe.");
+		}
+		System.out.println("[JOB]: Usuário administrador pronto para uso.");
 	}
 
 }
