@@ -15,6 +15,7 @@ import org.springframework.util.DigestUtils;
 public class Usuario {
 	
 	@Id
+	// Determina que o id é AUTO_INCREMENT
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	

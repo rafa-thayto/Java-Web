@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import br.senai.sp.info.pweb.jucacontrol.dao.UsuarioDAO;
 import br.senai.sp.info.pweb.jucacontrol.dao.jpa.UsuarioJPA;
 import br.senai.sp.info.pweb.jucacontrol.models.TiposUsuario;
 import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
@@ -13,7 +14,7 @@ import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 public class CriarAdministradorJob implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired
-	private UsuarioJPA usuarioJPA; 
+	private UsuarioDAO usuarioJPA; 
 	
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -28,6 +29,8 @@ public class CriarAdministradorJob implements ApplicationListener<ContextRefresh
 		admin.setTipo(TiposUsuario.ADMINISTRADOR);
 		admin.hashearSenha();
 		
+		System.out.println();
+		usuarioJPA.persistir(admin);
 		System.out.println();
 	}
 

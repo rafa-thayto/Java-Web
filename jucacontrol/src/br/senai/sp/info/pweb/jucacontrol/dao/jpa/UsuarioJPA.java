@@ -2,7 +2,10 @@ package br.senai.sp.info.pweb.jucacontrol.dao.jpa;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.senai.sp.info.pweb.jucacontrol.dao.UsuarioDAO;
 import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
@@ -10,10 +13,13 @@ import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 @Repository
 public class UsuarioJPA implements UsuarioDAO {
 
+	@Autowired
+	private SessionFactory sessionFactory;
+	
 	@Override
-	public Usuario persistir(Usuario usuario) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public void persistir(Usuario obj) {
+		sessionFactory.getCurrentSession().persist(obj);
 	}
 
 	@Override
@@ -23,7 +29,7 @@ public class UsuarioJPA implements UsuarioDAO {
 	}
 
 	@Override
-	public void deletar(Long id) {
+	public void deletar(Usuario obj) {
 		// TODO Auto-generated method stub
 		
 	}
