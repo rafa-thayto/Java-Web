@@ -1,4 +1,0 @@
-#Tomcat publish data
-#Mon Apr 02 16:30:27 BRT 2018
-org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\06929749974\\Desktop\\java-web\\jucacontrol\\WebContent\\WEB-INF\\lib\\spring-web-5.0.2.RELEASE.jar=WEB-INF/lib/spring-web-5.0.2.RELEASE.jar
-org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\06929749974\\Desktop\\java-web\\rh-tt3\\WebContent\\WEB-INF\\lib\\spring-web-5.0.2.RELEASE.jar=WEB-INF/lib/spring-web-5.0.2.RELEASE.jar

@@ -13,20 +13,38 @@ import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 
 @Repository
 @Transactional
-public class UsuarioJPA implements UsuarioDAO {
-
+public class UsuarioJPA implements UsuarioDAO{
+	
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
-	public void persistir(Usuario obj) {
-		sessionFactory.getCurrentSession().persist(obj);
+	public void alterar(Usuario obj) {
+		sessionFactory.getCurrentSession().update(obj);
+	}
+
+	@Override
+	public Usuario buscar(Long id) {
+		String hql = "FROM Usuario u WHERE u.id = :id";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("id", id);
+		
+		List<Usuario> resultados = query.list();
+		
+		//Pega o primeiro ou nulo
+		if(!resultados.isEmpty()) {
+			return resultados.get(0);
+		}else {
+			return null;
+		}
 	}
 
 	@Override
 	public List<Usuario> buscarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM Usuario u";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		
+		return query.list();
 	}
 
 	@Override
@@ -35,34 +53,30 @@ public class UsuarioJPA implements UsuarioDAO {
 	}
 
 	@Override
-	public Usuario buscarId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void alterar(Usuario obj) {
-		sessionFactory.getCurrentSession().update(obj);
+	public void persistir(Usuario obj) {
+		sessionFactory.getCurrentSession().persist(obj);
 	}
 
 	@Override
 	public Usuario buscarPorEmail(String email) {
-		// HQL - Hibernate Query Language
-		// Mistura elementos de orientacao a objetos com SQL
+		//HQL - Hibernate Query Language
+		//Mistura elementos de orientação a objetos com SQL
 		String hql = "FROM Usuario u WHERE u.email = :email";
 		
-		// Cria o objeto que realiza buscas
+		//Cria objeto que realiza buscas
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setParameter("email", email);
 		
-		// Executa e armazena o resultado
+		//Executa e armazena o resultado
 		List<Usuario> resultados = query.list();
 		
-		// Já que queremos um resultado, devemos realizar a seguinte tratativa...
-		if (!resultados.isEmpty()) {
+		//Já que queremos um resultado, devemos realizar a seguinte tratativa...
+		if(!resultados.isEmpty()) {
 			return resultados.get(0);
+		}else {
+			return null;
 		}
-		return null;
+		
 		
 	}
 

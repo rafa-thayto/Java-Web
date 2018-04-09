@@ -21,7 +21,7 @@ public class PersistenceConfig {
 	public DataSource getDataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/jucacontrol_mt3?serverTimezone=UTC");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/jucacontrol_tt3?serverTimezone=UTC");
 		dataSource.setUsername("root");
 		dataSource.setPassword("root132");
 		
@@ -42,7 +42,7 @@ public class PersistenceConfig {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(getDataSource());
 		sessionFactory.setHibernateProperties(getHibernateProperties());
-		sessionFactory.setPackagesToScan("br.senai.sp.info.pweb.jucacontrol.models");
+		sessionFactory.setPackagesToScan(	"br.senai.sp.info.pweb.jucacontrol.models");
 	 
 		return sessionFactory;
 	}

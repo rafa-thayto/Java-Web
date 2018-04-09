@@ -6,11 +6,16 @@ import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 
 public interface UsuarioDAO {
 	
-	public void persistir(Usuario obh);
-	public List<Usuario> buscarTodos();
-	public void deletar(Usuario obj);
-	public Usuario buscarId(Long id);
 	public void alterar(Usuario obj);
+	
+	public Usuario buscar(Long id);
+	
 	public Usuario buscarPorEmail(String email);
+	
+	public List<Usuario> buscarTodos();
+	
+	public void deletar(Usuario obj);
+	
+	public void persistir(Usuario obj);
 	
 }
