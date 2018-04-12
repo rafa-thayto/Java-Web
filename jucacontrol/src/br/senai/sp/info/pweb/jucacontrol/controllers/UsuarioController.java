@@ -75,6 +75,8 @@ public class UsuarioController {
 	@GetMapping("/app/adm/usuario/deletar")
 	public String deletar(@RequestParam(required = true) Long id, HttpServletResponse response) throws IOException {
 		
+		usuarioDAO.deletar(usuarioDAO.buscar(id));
+		
 		return "redirect:/app/adm/usuario";
 	}
 	
@@ -109,6 +111,10 @@ public class UsuarioController {
 				return "usuario/form";
 			}
 		}
+		
+		
+		
+		
 		
 		
 		//Verificando se usuário é administrador

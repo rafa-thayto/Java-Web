@@ -1,5 +1,6 @@
 package br.senai.sp.info.pweb.jucacontrol.controllers;
 
+import javax.naming.Binding;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.senai.sp.info.pweb.jucacontrol.dao.CategoriaOcorrenciaDAO;
+import br.senai.sp.info.pweb.jucacontrol.dao.jpa.CategoriaOcorrenciaJPA;
 import br.senai.sp.info.pweb.jucacontrol.models.CategoriaOcorrencia;
 
 @Controller
@@ -25,7 +27,14 @@ public class CategoriaOcorrenciaController {
 	@GetMapping("/categoria")
 	public String abrirMenuCategorias(@RequestParam(name = "id", required = false) Long id,
 										Model model) {
-		model.addAttribute("categoriaOcorrencia", new CategoriaOcorrencia());
+		
+		if(id != null) {
+			model.addAttribute("categoriaOcorrencia", categoriaOcorrenciaDAO.buscar(id));
+		}else {
+			model.addAttribute("categoriaOcorrencia", new CategoriaOcorrencia());
+		}
+		
+		
 		model.addAttribute("categorias", categoriaOcorrenciaDAO.buscarTodos());
 		return "categoria/menu";
 	}
@@ -33,41 +42,34 @@ public class CategoriaOcorrenciaController {
 	@GetMapping("/categoria/deletar")
 	public String deletar(@RequestParam(name = "id", required = true) Long id) {
 		
+		categoriaOcorrenciaDAO.deletar(categoriaOcorrenciaDAO.buscar(id));
+		
 		return "redirect:/app/adm/categoria";
 	}
 	
 	
 	@PostMapping("/categoria/salvar")
-	public String salvar(@Valid CategoriaOcorrencia categoriaOcorrencia, 
-						@RequestParam(name = "id", required = false) Long id, 
-						BindingResult brCategoria, Model model) {
+	public String salvar(@Valid CategoriaOcorrencia categoriaOcorrencia, BindingResult brCategoria, Model model) {
 		
-		if (categoriaOcorrencia.getId() == null) {
-			
-			if (categoriaOcorrenciaDAO.buscarPorNome(categoriaOcorrencia.getNome()) != null) {
-				brCategoria.addError(new FieldError("categoriaOcorrencia", "nome", 
-							"O nome '" + categoriaOcorrencia.getNome() + "' já esta em uso. Escolha outro"));
-			}
-			
-			//Verificar se houve erros
-			if(brCategoria.hasErrors()) {
-				return "categoria/menu";
-			}
-			
-		} else {
-			model.addAttribute("categoriaOcorrencia", categoriaOcorrenciaDAO.buscar(id));
+		if(categoriaOcorrenciaDAO.buscarPorNome(categoriaOcorrencia.getNome()) != null) {
+			brCategoria.addError(new FieldError("categoriaOcorrencia", "nome", 
+						"O nome '" + categoriaOcorrencia.getNome() + "' já esta em uso. Escolha outro"));
 		}
 		
-		// Caso o usuario 
-		if (categoriaOcorrencia.getId() == null) {
+		//Verificar se houve erros
+		if(brCategoria.hasErrors()) {
+			return "categoria/menu";
+		}
+		
+
+		if(categoriaOcorrencia.getId() == null) {
+			model.addAttribute("categorias", categoriaOcorrenciaDAO.buscarTodos());
 			categoriaOcorrenciaDAO.persistir(categoriaOcorrencia);
-		} else {
-			// Alterando usuario
-			CategoriaOcorrencia categoriaBanco = categoriaOcorrenciaDAO.buscar(categoriaOcorrencia.getId());
-			categoriaBanco.setNome(categoriaOcorrencia.getNome());
-			
-			categoriaOcorrenciaDAO.alterar(categoriaBanco);
+		}else {
+			categoriaOcorrenciaDAO.alterar(categoriaOcorrencia);
 		}
+		
+		
 		return "redirect:/app/adm/categoria";
 	}
 

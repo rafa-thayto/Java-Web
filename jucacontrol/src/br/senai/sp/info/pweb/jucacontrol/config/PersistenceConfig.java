@@ -33,6 +33,7 @@ public class PersistenceConfig {
 		properties.setProperty("hibernate.show_sql", "true");
 		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+		properties.setProperty("hibernate.connection.characterEncoding", "utf8mb4");
 		
 		return properties;
 	}

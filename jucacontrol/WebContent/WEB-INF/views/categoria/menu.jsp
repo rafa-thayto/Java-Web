@@ -46,12 +46,12 @@
 								<div class="col">
 									<button type="submit" class="btn btn-blue">SALVAR</button>
 								</div>
-								<c:if test="${not empty categoria.id}">
+								<c:if test="${not empty categoriaOcorrencia.id}">
 									<div class="col">
 										<a class="btn" href="${urlCategorias}">NOVO</a>
 									</div>
 									<div class="col">
-										<a class="btn btn-red" href="${urlDeletarCategoria}?id=${categoria.id}">DELETAR</a>
+										<a class="btn btn-red" href="${urlDeletarCategoria}?id=${categoriaOcorrencia.id}">DELETAR</a>
 									</div>			
 								</c:if>
 							</div>

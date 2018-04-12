@@ -25,8 +25,18 @@ public class CategoriaOcorrenciaJPA implements CategoriaOcorrenciaDAO {
 
 	@Override
 	public CategoriaOcorrencia buscar(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM CategoriaOcorrencia c WHERE c.id = :id";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("id", id);
+		
+		//Executa e armazena o resultado
+		List<CategoriaOcorrencia> resultado = query.list();
+		
+		if(!resultado.isEmpty()) {
+			return resultado.get(0);
+		}else {
+			return null;
+		}
 	}
 
 	@Override
@@ -47,16 +57,14 @@ public class CategoriaOcorrenciaJPA implements CategoriaOcorrenciaDAO {
 
 	@Override
 	public List<CategoriaOcorrencia> buscarTodos() {
-		String hql = "FROM CategoriaOcorrencia c";
+		String hql = "FROM CategoriaOcorrencia";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		
 		return query.list();
 	}
 
 	@Override
 	public void deletar(CategoriaOcorrencia obj) {
-		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().delete(obj);
 	}
 
 	@Override
