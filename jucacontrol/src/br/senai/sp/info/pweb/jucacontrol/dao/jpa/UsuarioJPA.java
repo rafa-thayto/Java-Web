@@ -80,4 +80,26 @@ public class UsuarioJPA implements UsuarioDAO{
 		
 	}
 
+	@Override
+	public Usuario buscarPorEmailESenha(String email, String senha) {
+		//HQL - Hibernate Query Language
+		//Mistura elementos de orientação a objetos com SQL
+		String hql = "FROM Usuario u WHERE u.email = :email AND u.senha = :senha";
+		
+		//Cria objeto que realiza buscas
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("email", email);
+		query.setParameter("senha", senha);
+		
+		//Executa e armazena o resultado
+		List<Usuario> resultados = query.list();
+		
+		//Já que queremos um resultado, devemos realizar a seguinte tratativa...
+		if(!resultados.isEmpty()) {
+			return resultados.get(0);
+		}else {
+			return null;
+		}
+	}
+
 }

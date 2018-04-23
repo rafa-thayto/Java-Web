@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.jboss.jandex.TypeTarget.Usage;
@@ -28,7 +29,14 @@ public class UsuarioController {
 	private UsuarioDAO usuarioDAO;
 	
 	@GetMapping(value = {"/", ""})
-	public String abrirLogin(Model model) {
+	public String abrirLogin(Model model, HttpSession session) {
+		
+		//Caso o usuário já esteja logado, redireciona-o para o /app0
+		if(session.getAttribute("usuarioAutenticado") != null) {
+			return "redirect:/app";
+		}
+		
+		model.addAttribute("usuario", new Usuario());
 		
 		return "index";
 	}
@@ -150,22 +158,39 @@ public class UsuarioController {
 	@PostMapping({"/usuario/autenticar"})
 	//@Valid - DEtermina que o Spring deve validar o objeto
 	//BindingResult - Armazena os possíveis erros de validação que ocorreram no objeto
-	public String autenticar(@Valid Usuario usuario, BindingResult brUsuario) {
+	public String autenticar(@Valid Usuario usuario, BindingResult brUsuario, HttpSession sessao) {
 		
 		//VErificando se houveram erros no binding result
 		if(	brUsuario.hasFieldErrors("email") || 
 			brUsuario.hasFieldErrors("senha")) {
 			
-			System.out.println("CAPTUROU OS ERROS");
-			
+			System.out.println("CAPTUROU OS ERROS");			
 			return "index";
 		}
+		
+		//Verificando se usuário existe, antes disso hasheamos sua senha
+		usuario.hashearSenha();
+		Usuario usuarioAutenticado =
+				usuarioDAO
+					.buscarPorEmailESenha(usuario.getEmail(), usuario.getSenha()) ;
+		
+		//Verificando se o usuário não existe
+		if(usuarioAutenticado == null) {
+			brUsuario
+				.addError(new FieldError("usuario", "email", "E-mail ou senha inválidos"));
+			return "index";
+		}
+		
+		//Aplica o usuário autenticado na sessão
+		sessao.setAttribute("usuarioAutenticado", usuarioAutenticado);
 
 		return "redirect:/app/";
 	}
 	
 	@GetMapping({"/sair"})
-	public String logout() {
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
 		
 		return "redirect:/";
 	}

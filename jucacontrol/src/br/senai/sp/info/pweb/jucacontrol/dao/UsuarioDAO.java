@@ -14,6 +14,8 @@ public interface UsuarioDAO {
 	
 	public Usuario buscarPorEmail(String email);
 	
+	public Usuario buscarPorEmailESenha(String email, String senha);
+	
 	public List<Usuario> buscarTodos();
 	
 	public void deletar(Usuario obj);

@@ -58,12 +58,12 @@ public class CategoriaOcorrenciaController {
 		
 		//Verificar se houve erros
 		if(brCategoria.hasErrors()) {
+			model.addAttribute("categorias", categoriaOcorrenciaDAO.buscarTodos());
 			return "categoria/menu";
 		}
 		
 
 		if(categoriaOcorrencia.getId() == null) {
-			model.addAttribute("categorias", categoriaOcorrenciaDAO.buscarTodos());
 			categoriaOcorrenciaDAO.persistir(categoriaOcorrencia);
 		}else {
 			categoriaOcorrenciaDAO.alterar(categoriaOcorrencia);
