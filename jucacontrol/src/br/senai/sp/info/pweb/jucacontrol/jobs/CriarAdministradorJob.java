@@ -9,20 +9,20 @@ import br.senai.sp.info.pweb.jucacontrol.dao.UsuarioDAO;
 import br.senai.sp.info.pweb.jucacontrol.models.TiposUsuario;
 import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 
-//ApplicationLIstener - Interface para eventos que acontecem na aplicação web (iniciada/parada, etc.)
-//ContextRefreshedEvent - Especifica que o evento que será observado é de 'atualização de contexto'
+//ApplicationLIstener - Interface para eventos que acontecem na aplicaï¿½ï¿½o web (iniciada/parada, etc.)
+//ContextRefreshedEvent - Especifica que o evento que serï¿½ observado ï¿½ de 'atualizaï¿½ï¿½o de contexto'
 //ou seja, quando o spring for iniciado
 @Component
 public class CriarAdministradorJob implements ApplicationListener<ContextRefreshedEvent> {
-	
+
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent arg0) {
-		
-		System.out.println("CADASTRANDO USUÁRIO ADMINISTRADOR PADRÃO...");
-		
+
+		System.out.println("CADASTRANDO USUï¿½RIO ADMINISTRADOR PADRï¿½O...");
+
 		Usuario usuario = new Usuario();
 		usuario.setEmail("admin@email.com");
 		usuario.setSenha("admin");
@@ -30,17 +30,17 @@ public class CriarAdministradorJob implements ApplicationListener<ContextRefresh
 		usuario.setSobrenome("do Sistema");
 		usuario.setTipo(TiposUsuario.ADMINISTRADOR);
 		usuario.hashearSenha();
-		
+
 		//Inserir no banco de dados
 		System.out.println("Verificando se ADMINISTRADOR EXISTE...");
-		
+
 		if(usuarioDAO.buscarPorEmail(usuario.getEmail()) == null) {
-			System.out.println("Cadastrando usuário administrador em 3, 2, 1...");
+			System.out.println("Cadastrando usuï¿½rio administrador em 3, 2, 1...");
 			usuarioDAO.persistir(usuario);
 		}else {
-			System.out.println("Usuário já existe, prosseguindo com a aplicação normalmente");
+			System.out.println("Usuï¿½rio jï¿½ existe, prosseguindo com a aplicaï¿½ï¿½o normalmente");
 		}
-		
+
 	}
 
 }

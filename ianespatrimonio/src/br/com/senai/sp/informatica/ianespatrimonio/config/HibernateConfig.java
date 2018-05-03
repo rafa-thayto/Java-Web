@@ -32,7 +32,7 @@ public class HibernateConfig {
 		Properties props = new Properties();
 		// Setting properties
 		props.setProperty("hibernet.show_sql", "true");
-		props.setProperty("hibernate.hbm2ddl.auto", "create");
+		props.setProperty("hibernate.hbm2ddl.auto", "update");
 		props.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 		
 		return props;

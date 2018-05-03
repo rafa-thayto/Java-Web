@@ -25,19 +25,28 @@ public class UsuarioJPA implements UsuarioDAO {
 
 	@Override
 	public void deletar(Usuario obj) {
-		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().delete(obj);
 	}
 
 	@Override
 	public void alterar(Usuario obj) {
-		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().update(obj);
 	}
 
 	@Override
-	public void buscarId(Long id) {
-		// TODO Auto-generated method stub
+	public Usuario buscarId(Long id) {
+		String hql = "FROM Usuario u WHERE u.id = :id";
+		
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("id", id);
+		
+		List<Usuario> result = query.list();
+		
+		if(!result.isEmpty()) {
+			return result.get(0);
+		}else {
+			return null;
+		}
 		
 	}
 

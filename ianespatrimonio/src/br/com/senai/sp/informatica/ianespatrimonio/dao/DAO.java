@@ -7,7 +7,7 @@ public interface DAO<T> {
 	public void persistir(T obj);
 	public void deletar(T obj);
 	public void alterar(T obj);
-	public void buscarId(Long id);
+	public T buscarId(Long id);
 	public List<T> buscarTodos();
 	
 }
