@@ -1,5 +1,7 @@
 package br.senai.sp.info.pweb.jucacontrol.config;
 
+import java.awt.image.BufferedImage;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -55,7 +57,6 @@ public class AppConfig implements WebMvcConfigurer{
 		return messageSource;
 	}
 	
-	
 	@Bean
 	public AutenticacaoInterceptor getAutenticacaoInterceptor() {
 		return new AutenticacaoInterceptor();
@@ -63,9 +64,21 @@ public class AppConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		
 		registry
 			.addInterceptor(getAutenticacaoInterceptor())
 				.addPathPatterns("/**");
+	}
+	
+	
+	//Quem resolve o HTTP multipart/form-data
+	@Bean
+	public MultipartResolver multipartResolver() {
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setMaxUploadSize(5 * 1024 * 1024);
+		
+		//BufferedImage <- Classe responsavel por tratar imagens no Java
+		
+		return resolver;
+		
 	}
 }

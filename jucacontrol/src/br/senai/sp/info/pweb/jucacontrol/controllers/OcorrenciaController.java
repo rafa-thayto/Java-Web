@@ -1,6 +1,7 @@
 package br.senai.sp.info.pweb.jucacontrol.controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.senai.sp.info.pweb.jucacontrol.dao.CategoriaOcorrenciaDAO;
 import br.senai.sp.info.pweb.jucacontrol.dao.OcorrenciaDAO;
-import br.senai.sp.info.pweb.jucacontrol.models.BuscaPorSituacaoOcorrencia;
+import br.senai.sp.info.pweb.jucacontrol.models.BuscaPorSituacaoDeOcorrencia;
 import br.senai.sp.info.pweb.jucacontrol.models.Ocorrencia;
 import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 
@@ -27,22 +28,30 @@ import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 public class OcorrenciaController {
 	
 	@Autowired
-	private CategoriaOcorrenciaDAO categoriaOcorrenciaDAO;
+	private CategoriaOcorrenciaDAO categoriaDAO;
 	
 	@Autowired
 	private OcorrenciaDAO ocorrenciaDAO;
 		
+	/**
+	 * 
+	 * @param model
+	 * @param situacao - Parâmetro GET (pesquisa) que define o filtro de busca de ocorrências
+	 * @return
+	 */
 	@GetMapping({"", "/"})
-	public String abrirListaOcorrencia(Model model, 
-				@RequestParam(required = false, name = "pesquisa") BuscaPorSituacaoOcorrencia situacao) {
+	public String abrirListaOcorrencia(	Model model, 
+					@RequestParam(name = "pesquisa", required = false) BuscaPorSituacaoDeOcorrencia situacao) {
 		
-		// Verificando se a situação foi informada
-		if (situacao == null) {
-			situacao = BuscaPorSituacaoOcorrencia.TODOS;
+		//Caso a situação não seja passada consideraremos como filtro: TODOS
+		if(situacao == null) {
+			situacao = BuscaPorSituacaoDeOcorrencia.TODOS;
 		}
 		
 		model.addAttribute("ocorrencias", ocorrenciaDAO.buscarPorSituacao(situacao));
-		model.addAttribute("tiposBusca", BuscaPorSituacaoOcorrencia.values());
+		
+		//Manda as enumerações de busca para a tela
+		model.addAttribute("pesquisas", BuscaPorSituacaoDeOcorrencia.values());
 		
 		return "ocorrencia/lista";
 	}
@@ -50,8 +59,11 @@ public class OcorrenciaController {
 	@GetMapping({"/ocorrencia/nova"})
 	public String abriFormOcorrencia(Model model) {
 		
-		model.addAttribute("ocorrencia", new Ocorrencia());
-		model.addAttribute("categorias", categoriaOcorrenciaDAO.buscarTodos());
+		//Enviando as categorias para a página
+		model.addAttribute("categorias", categoriaDAO.buscarTodos());
+		
+		//Enviando o modelo pro modelAttribute
+		model.addAttribute(new Ocorrencia());
 		
 		return "ocorrencia/form";
 	}
@@ -59,83 +71,106 @@ public class OcorrenciaController {
 	@GetMapping("/ocorrencia/editar")
 	public String abrirEditarOcorrencia(@RequestParam(required = true) Long id, Model model) {
 		
+		//Passando a ocorrencia para a pagina
 		model.addAttribute("ocorrencia", ocorrenciaDAO.buscar(id));
-		model.addAttribute("categorias", categoriaOcorrenciaDAO.buscarTodos());
-		
+		model.addAttribute("categorias", categoriaDAO.buscarTodos());
 		
 		return "ocorrencia/form";
 	}
 	
 	@GetMapping("/ocorrencia/assumir")
-	public String assumirOcorrencia(@RequestParam(required = true) Long id, HttpSession session, RedirectAttributes redirectAttributes) {
-		
-		// Pegar a ocorrência para aplicart um técnico
+	public String assumirOcorrencia(@RequestParam(required = true) Long id, HttpSession session) {
+		//Pegando a ocorrência que será assumida através do ID
 		Ocorrencia o = ocorrenciaDAO.buscar(id);
 		
-		// Pega o usuário logado
+		//Pegando o usuário logado para determinar que ele assumirá a ocorrência
 		Usuario logado = (Usuario) session.getAttribute("usuarioAutenticado");
 		
-		// Seta o usuário logado como quem atendeu icirrebcua
+		//Modificando a ocorrência...
+		o.setDataModificacao(new Date());
 		o.setTecnico(logado);
 		
-		o.setDataModificacao(new Date());
-		
-		// Salvando ocorrencia nova no banco
 		ocorrenciaDAO.alterar(o);
 		
 		return "redirect:/app";
 	}
 	
-	@GetMapping("/ocorrencia/encerrar")
-	public String concluirOcorrencia(@RequestParam(required = true) Long id, RedirectAttributes redirectAttributes) {
+	@GetMapping("/ocorrencia/encerrar/tecnico")
+	public String concluirOcorrenciaTecnico(@RequestParam(required = true) Long id, RedirectAttributes redirectAttributes) {
 		
+		//Pega a ocorrência e define a data de conclusão do técnico
 		Ocorrencia o = ocorrenciaDAO.buscar(id);
-		o.setDataModificacao(new Date());
-		o.setDataConclusao(new Date());
-		
+		o.setDataConclusaoTecnico(new Date());
 		ocorrenciaDAO.alterar(o);
+		
+		
+		return "redirect:/app";
+	}
+	
+	@GetMapping("/ocorrencia/encerrar/emissor")
+	public String concluirOcorrenciaEmissor(@RequestParam(required = true) Long id, RedirectAttributes redirectAttributes) {
+		
+		//Pega a ocorrência e define a data de conclusão do técnico
+		Ocorrencia o = ocorrenciaDAO.buscar(id);
+		o.setDataConclusaoEmissor(new Date());
+		ocorrenciaDAO.alterar(o);
+		
+		
 		return "redirect:/app";
 	}
 	
 	@PostMapping("/ocorrencia/salvar")
-	public String salvar(@Valid Ocorrencia ocorrencia, BindingResult brOcorrencia, Model model, HttpSession session) {		
+	public String salvar(@Valid Ocorrencia ocorrencia, BindingResult brOcorrencia, Model model, HttpSession session) {
 		
-		//Verificando se possui erros
+		//Aplicando validações
 		if(brOcorrencia.hasErrors()) {
-			
-			//Reenvia as categorias para a tela para, caso de erros de validação
-			model.addAttribute("categorias", categoriaOcorrenciaDAO.buscarTodos());
+			System.out.println(brOcorrencia);
+			//Repassa as categorias para reabrir o formulário
+			model.addAttribute("categorias", categoriaDAO.buscarTodos());
 			return "ocorrencia/form";
 		}
 		
 		
-		
-		//Aplicando os valores padrões do sistema
+		//Persistir no banco de dados e aplicando a data de cadastro para agora
 		ocorrencia.setDataModificacao(new Date());
-		
+		Usuario autenticado = (Usuario) session.getAttribute("usuarioAutenticado");
 		
 		
 		//Verificando se cadastro
 		if(ocorrencia.getId() == null) {
-			//Pegando o usuário logado
-			Usuario usuarioAutenticado = (Usuario) session.getAttribute("usuarioAutenticado");
-			//Determina que o usuario autenticado é o emissor da ocorrência
-			ocorrencia.setEmissor(usuarioAutenticado);
+			//Obtendo o usuário logado
+			
 			ocorrencia.setDataCadastro(new Date());
+			ocorrencia.setEmissor(autenticado);
 			
 			ocorrenciaDAO.persistir(ocorrencia);
 		}
-		//Verificando se alteração
+		//Verifica se alteralçao
 		else {
-			//Pegando o objeto que será alterado
+			//Busca a ocorrência do banco de dados para alterá-la
 			Ocorrencia ocorrenciaAlterada = ocorrenciaDAO.buscar(ocorrencia.getId());
 			
-			//copyProperties -> Passa as propriedades de um objeto para outro
-			//(objetoFonteDeDados, objetoQueReceberaOsDados)
-			BeanUtils.copyProperties(ocorrencia, ocorrenciaAlterada, "id", "dataCadastro", "emissor");
+			//SEGURANÇA: VErificar se o usuário logado é o dono da ocorrência...
+			if(ocorrenciaAlterada.getEmissor().getId() != autenticado.getId()) {
+				throw new RuntimeException("Você não pode modificar esta ocorrência.");
+			}
+			
+//			BeanUtils.copyProperties(ocorrencia, ocorrenciaAlterada, 
+//				"id", "emissor", "dataCadastro", "tecnico"); // <- campos que estou ignorando
+			
+			ocorrenciaAlterada.setTitulo(ocorrencia.getTitulo());
+			ocorrenciaAlterada.setDescricao(ocorrencia.getDescricao());
+			ocorrenciaAlterada.setCategoria(ocorrencia.getCategoria());
 			
 			ocorrenciaDAO.alterar(ocorrenciaAlterada);
+			
 		}
+		
+		
+		
+		
+		
+		
 		
 		return "redirect:/app";
 	}

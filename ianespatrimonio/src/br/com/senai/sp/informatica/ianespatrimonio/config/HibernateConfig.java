@@ -44,7 +44,7 @@ public class HibernateConfig {
 		factoryBean.setDataSource(getDataSource());
 		factoryBean.setHibernateProperties(getHibernateProperties());
 		
-		factoryBean.setPackagesToScan("br.com.senai.sp.informatica.ianespatrimonio.models");
+		factoryBean.setPackagesToScan("br.com.senai.sp.informatica.ianespatrimonio.model");
 		
 		return factoryBean;
 	}

@@ -1,15 +1,9 @@
 package br.com.senai.sp.informatica.ianespatrimonio.dao;
 
-import java.util.List;
+import br.com.senai.sp.informatica.ianespatrimonio.model.Usuario;
 
-import br.com.senai.sp.informatica.ianespatrimonio.models.Usuario;
-
-public interface UsuarioDAO {
-
-	public void persistir(Usuario obj);
-	public void deletar(Usuario obj);
-	public void alterar(Usuario obj);
-	public void buscarId(Long id);
-	public List<Usuario> buscarTodos();
+public interface UsuarioDAO extends DAO<Usuario> {
 	
+	public Usuario buscarPorEmail(String email);
+	public Usuario buscarPorEmailESenha(String email, String senha);
 }

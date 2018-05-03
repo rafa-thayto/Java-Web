@@ -1,4 +1,4 @@
-package br.com.senai.sp.informatica.ianespatrimonio.models;
+package br.com.senai.sp.informatica.ianespatrimonio.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,21 +38,29 @@ public class Usuario {
 	@Size(min = 1, max = 120)
 	private String email;
 	
-	@Column(length = 32, nullable = false, unique = false)
+	@Column(length = 33, nullable = false, unique = false)
 	@NotNull
-	@Size(min = 6, max = 20)
+	@Size(min = 6, max = 33)
 	private String senha;
 
 	public void hashearSenha() {
 		this.senha = DigestUtils.md5DigestAsHex(this.senha.getBytes());
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public TiposUsuario getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TiposUsuario tipo) {
+		this.tipo = tipo;
 	}
 
 	public String getNome() {
@@ -86,5 +94,13 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", tipo=" + tipo + ", nome=" + nome + ", sobrenome=" + sobrenome + ", email="
+				+ email + ", senha=" + senha + "]";
+	}
+	
+	
 	
 }

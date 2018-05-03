@@ -1,25 +1,23 @@
-package br.senai.sp.info.pweb.jucacontrol.models;
+package br.com.senai.sp.informatica.ianespatrimonio.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "cat_ocorrencia")
-public class CategoriaOcorrencia {
+public class Ambiente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(length = 40, nullable = false, unique = true)
-	@Size(min = 1, max = 40, message = "{Size}")
-	@NotNull(message = "{NotNull}")
+	@Column(length = 40, unique = true, nullable = false)
+	@NotNull
+	@Size(min = 1, max = 40)
 	private String nome;
 
 	public Long getId() {
@@ -37,4 +35,5 @@ public class CategoriaOcorrencia {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 }

@@ -1,14 +1,19 @@
 package br.senai.sp.info.pweb.jucacontrol.controllers;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Locale;
+import java.util.Random;
 
+import javax.mail.MessagingException;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.jboss.jandex.TypeTarget.Usage;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +22,14 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.senai.sp.info.pweb.jucacontrol.dao.UsuarioDAO;
 import br.senai.sp.info.pweb.jucacontrol.models.TiposUsuario;
 import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
+import br.senai.sp.info.pweb.jucacontrol.utils.EmailUtils;
+import br.senai.sp.info.pweb.jucacontrol.utils.ProjetoStorage;
 
 @Controller
 public class UsuarioController {
@@ -28,41 +37,34 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 	
+	@Autowired
+	private ProjetoStorage storage;
+	
 	@GetMapping(value = {"/", ""})
-	public String abrirLogin(Model model, HttpSession session) {
-		
-		//Caso o usuário já esteja logado, redireciona-o para o /app0
-		if(session.getAttribute("usuarioAutenticado") != null) {
-			return "redirect:/app";
-		}
-		
-		model.addAttribute("usuario", new Usuario());
-		
+	public String abrirLogin(Model model) {
+				
 		return "index";
 	}
 	
 	@GetMapping("/app/adm/usuario/editar")
-	public String abrirEdicao(Model model, @RequestParam(name = "id", required = true) Long id, HttpServletResponse response) throws IOException {
+	public String abrirEdicao(Model model, @RequestParam(name = "id", required = true) Long id, 
+			HttpServletResponse response) throws IOException {
 		
-		//Buscar o usuário pelo id
-		Usuario usuarioBuscado = usuarioDAO.buscar(id);
-		model.addAttribute("usuario", usuarioBuscado);
+		model.addAttribute("usuario", usuarioDAO.buscar(id));
 		
 		return "usuario/form";
 	}
 	
 	@GetMapping("/app/adm/usuario")
 	public String abrirLista(Model model) {
-		
 		model.addAttribute("usuarios", usuarioDAO.buscarTodos());
-		
 		return "usuario/lista";
 	}
 	
 	@GetMapping("/app/adm/usuario/novo")
 	public String abrirFormNovoUsuario(Model model) {
 		
-		//Passando o usuário vazio para o model attribute
+		//Passando o objeto que será enviado pra tela
 		model.addAttribute("usuario", new Usuario());
 		
 		return "usuario/form";
@@ -83,50 +85,48 @@ public class UsuarioController {
 	@GetMapping("/app/adm/usuario/deletar")
 	public String deletar(@RequestParam(required = true) Long id, HttpServletResponse response) throws IOException {
 		
-		usuarioDAO.deletar(usuarioDAO.buscar(id));
+		Usuario usuarioADeletar = usuarioDAO.buscar(id);
+		usuarioDAO.deletar(usuarioADeletar);
 		
 		return "redirect:/app/adm/usuario";
 	}
 	
+	/*
+	 * @VAlid <parametro> e colocar BindingResult em seguida
+	 */
 	@PostMapping( value = {"/app/adm/usuario/salvar"})
-	public String salvar(@Valid Usuario usuario, BindingResult brUsuario,
-						@RequestParam(name = "confirmacaoSenha", required = false) String confirmacao,
-						@RequestParam(name = "administrador", required = false) Boolean isAdministrador) {
+	public String salvar(@Valid  Usuario usuario,  BindingResult brUsuario,
+						@RequestParam(name = "confirmacaoSenha", required = false) String confirmaSenha,
+						@RequestParam(name = "isAdministrador", required = false) Boolean ehAdministrador,
+						@RequestPart(name = "foto", required = false) MultipartFile foto) {
 		
-		//VERIFICANDO SE CADASTRO
+		
+		//Verificando se é CADASTRO
 		if(usuario.getId() == null) {
-			
-			//Checando se a confirmação de senha NÃO for igual a senha
-			if(!confirmacao.equals(usuario.getSenha())) {
+			//Checando se a senha não é igual a confirmação de senha (CASO SEJA UM CADASTRO)
+			if(!confirmaSenha.equals(usuario.getSenha())) {
 				brUsuario.addError(new FieldError("usuario", "senha", "As senhas não coincidem"));
 			}
 			
-			//Verificando se email já existe
+			//Chegando se e-mail já está sendo utilizado
 			if(usuarioDAO.buscarPorEmail(usuario.getEmail()) != null) {
-				brUsuario.addError(new FieldError("usuario", "email", "O email '" + usuario.getEmail() + "' já está em uso"));
+				brUsuario.addError(new FieldError("usuario", "email", "O e-mail selecionado já esta em uso"));
 			}
 			
-			//Verificando se o binding result contem erros
+			//Se houverem erros no usuário, reabre o formulário
 			if(brUsuario.hasErrors()) {
-				return "usuario/form"; //Reabre a tela de cadastro
+				return "usuario/form";
 			}
-			
-		}
-		//VERIFICANDO SE É ALTERAÇÃO
-		else {
-			if(	brUsuario.hasFieldErrors("nome") || 
-				brUsuario.hasFieldErrors("sobrenome")){
+		}else {
+			//Validações de ALTERAÇÃO
+			if(brUsuario.hasFieldErrors("nome") || brUsuario.hasFieldErrors("sobrenome")) {
 				return "usuario/form";
 			}
 		}
 		
-		
-		
-		
-		
-		
-		//Verificando se usuário é administrador
-		if(isAdministrador != null) {
+		//Verificando se o checkbox foi marcado através da checagem de valor nulo
+		System.out.println("É administrador: " + ehAdministrador);
+		if(ehAdministrador != null) {
 			usuario.setTipo(TiposUsuario.ADMINISTRADOR);
 		}else {
 			usuario.setTipo(TiposUsuario.COMUM);
@@ -135,21 +135,39 @@ public class UsuarioController {
 		
 		//CASO CADASTRO...
 		if(usuario.getId() == null) {
-			//Armazena o usuário no banco de dados
+			//Salvando usuário hasheando a senha
 			usuario.hashearSenha();
 			usuarioDAO.persistir(usuario);
-		}else {
 			
-			//BUscar o usuário do banco
+			//Enviando email
+			String titulo = "Bem-Vindo ao Jucacontrol";
+			String corpo = "Olá, " + usuario.getNome() + "! Seja bem-vindo ao Jucacontrol. " +
+			"Acesse o link: localhost:8080/jc/ para realizar o login.";
+			
+			try {
+				EmailUtils.enviarEmail(titulo, corpo, usuario.getEmail());
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		//CASO ALTERAÇÃO
+		else {
+			//PEga o usuário do HIBERNATE através do id do form para poder alterá-lo
 			Usuario usuarioBanco = usuarioDAO.buscar(usuario.getId());
-			
-			//Altera com os dados que recebi do formulário
 			usuarioBanco.setNome(usuario.getNome());
 			usuarioBanco.setSobrenome(usuario.getSobrenome());
 			usuarioBanco.setTipo(usuario.getTipo());
 			
-			//Altera o usuário do
 			usuarioDAO.alterar(usuarioBanco);
+		}
+		
+		
+		//Armazenando a foto de perfil
+		try {
+			storage.armazenarFotoDePerfil("foto_" + usuario.getId(), foto.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 		return "redirect:/app/adm/usuario";
@@ -158,39 +176,32 @@ public class UsuarioController {
 	@PostMapping({"/usuario/autenticar"})
 	//@Valid - DEtermina que o Spring deve validar o objeto
 	//BindingResult - Armazena os possíveis erros de validação que ocorreram no objeto
-	public String autenticar(@Valid Usuario usuario, BindingResult brUsuario, HttpSession sessao) {
-		
-		//VErificando se houveram erros no binding result
-		if(	brUsuario.hasFieldErrors("email") || 
-			brUsuario.hasFieldErrors("senha")) {
-			
-			System.out.println("CAPTUROU OS ERROS");			
-			return "index";
-		}
-		
-		//Verificando se usuário existe, antes disso hasheamos sua senha
-		usuario.hashearSenha();
-		Usuario usuarioAutenticado =
-				usuarioDAO
-					.buscarPorEmailESenha(usuario.getEmail(), usuario.getSenha()) ;
-		
-		//Verificando se o usuário não existe
-		if(usuarioAutenticado == null) {
-			brUsuario
-				.addError(new FieldError("usuario", "email", "E-mail ou senha inválidos"));
-			return "index";
-		}
-		
-		//Aplica o usuário autenticado na sessão
-		sessao.setAttribute("usuarioAutenticado", usuarioAutenticado);
+	public String autenticar(@Valid Usuario usuario, BindingResult brUsuario, HttpSession session) {
 
+		//Verificando se usuário existe
+		//Caso a senha do usuário do sistema seja hasheada não esqueçais
+		//de hashear para compara-lo, Felipenses 132:1
+		usuario.hashearSenha();
+		Usuario usuarioBuscado = usuarioDAO.buscarPorEmailESenha(usuario.getEmail(), usuario.getSenha());
+		if(usuarioBuscado == null) {
+			brUsuario.addError(new FieldError("usuario", "email", "O e-mail ou senha incorretos"));
+		}
+		
+		//Verifica se há erros no BindingResult
+		if(brUsuario.hasFieldErrors("email") || brUsuario.hasFieldErrors("senha")) {
+			System.out.println("Deu erro");
+			System.out.println(brUsuario);
+			return "index";
+		}
+		
+		//Aplicando o usuário na sessão
+		session.setAttribute("usuarioAutenticado", usuarioBuscado);
+		
 		return "redirect:/app/";
 	}
 	
 	@GetMapping({"/sair"})
-	public String logout(HttpSession session) {
-		
-		session.invalidate();
+	public String logout() {
 		
 		return "redirect:/";
 	}
