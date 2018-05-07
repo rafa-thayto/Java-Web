@@ -44,7 +44,7 @@ public class UsuarioJPA implements UsuarioDAO {
 		
 		if(!result.isEmpty()) {
 			return result.get(0);
-		}else {
+		} else {
 			return null;
 		}
 		
@@ -52,8 +52,12 @@ public class UsuarioJPA implements UsuarioDAO {
 
 	@Override
 	public List<Usuario> buscarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String hql = "FROM Usuario u";
+		
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		return query.list(); 
+		
 	}
 
 	@Override
@@ -76,8 +80,20 @@ public class UsuarioJPA implements UsuarioDAO {
 
 	@Override
 	public Usuario buscarPorEmailESenha(String email, String senha) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM Usuario u WHERE u.email = :email AND u.senha = :senha";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		
+		query.setParameter("email", email);
+		query.setParameter("senha", senha);
+		
+		List<Usuario> result = query.list();
+		
+		if (!result.isEmpty()) {
+			return result.get(0);
+		} else {
+			return null;
+		}
+		
 	}
 
 }

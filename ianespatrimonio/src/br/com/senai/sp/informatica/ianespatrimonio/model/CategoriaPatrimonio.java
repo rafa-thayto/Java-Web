@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Categoria {
+public class CategoriaPatrimonio {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -24,7 +24,7 @@ public class Patrimonio {
 	
 	@ManyToOne
 	@JoinColumn(name = "categoria_id", nullable = false)
-	private Categoria categorias;
+	private CategoriaPatrimonio categorias;
 	
 	@Column(nullable = false)
 	private Date data_cadastro;
@@ -49,11 +49,11 @@ public class Patrimonio {
 		this.nome = nome;
 	}
 
-	public Categoria getCategorias() {
+	public CategoriaPatrimonio getCategorias() {
 		return categorias;
 	}
 
-	public void setCategorias(Categoria categorias) {
+	public void setCategorias(CategoriaPatrimonio categorias) {
 		this.categorias = categorias;
 	}
 
