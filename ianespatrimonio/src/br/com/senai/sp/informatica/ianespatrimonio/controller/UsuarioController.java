@@ -11,14 +11,15 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.com.senai.sp.informatica.ianespatrimonio.dao.UsuarioDAO;
 import br.com.senai.sp.informatica.ianespatrimonio.model.TiposUsuario;
 import br.com.senai.sp.informatica.ianespatrimonio.model.Usuario;
 
-@Controller
+@RestController
 public class UsuarioController {
-
+	
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 	
