@@ -2,6 +2,7 @@ package br.senai.sp.info.pweb.jucacontrol.dao.jpa;
 
 import java.util.List;
 
+import br.senai.sp.info.pweb.jucacontrol.models.CategoriaOcorrencia;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,15 @@ public class OcorrenciaJPA implements OcorrenciaDAO {
 	}
 
 	@Override
-	public void alterar(Ocorrencia obj) {
+	public CategoriaOcorrencia alterar(Ocorrencia obj) {
 		sessionFactory.getCurrentSession().update(obj);
+		return null;
 	}
 
 	@Override
-	public void deletar(Ocorrencia obj) {
+	public CategoriaOcorrencia deletar(Ocorrencia obj) {
 		sessionFactory.getCurrentSession().delete(obj);
+		return null;
 	}
 
 	@Override

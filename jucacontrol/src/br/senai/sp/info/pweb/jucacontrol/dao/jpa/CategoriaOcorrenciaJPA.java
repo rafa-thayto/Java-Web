@@ -20,8 +20,9 @@ public class CategoriaOcorrenciaJPA implements CategoriaOcorrenciaDAO {
 	
 
 	@Override
-	public void alterar(CategoriaOcorrencia obj) {
+	public CategoriaOcorrencia alterar(CategoriaOcorrencia obj) {
 		session.getCurrentSession().update(obj);
+		return obj;
 	}
 
 	@Override
@@ -48,8 +49,9 @@ public class CategoriaOcorrenciaJPA implements CategoriaOcorrenciaDAO {
 	}
 
 	@Override
-	public void deletar(CategoriaOcorrencia obj) {
+	public CategoriaOcorrencia deletar(CategoriaOcorrencia obj) {
 		session.getCurrentSession().delete(obj);
+		return obj;
 	}
 
 	@Override

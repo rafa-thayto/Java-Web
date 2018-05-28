@@ -16,10 +16,10 @@ public class CategoriaOcorrencia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(length = 40, nullable = false, unique = true)
-	@Size(min = 1, max = 40, message = "{Size}")
-	@NotNull(message = "{NotNull}")
+	@Size(min = 1, max = 40)
+	@NotNull(message = "Este campo é obrigatório")
 	private String nome;
 
 	public Long getId() {

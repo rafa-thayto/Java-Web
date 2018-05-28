@@ -2,6 +2,7 @@ package br.senai.sp.info.pweb.jucacontrol.dao.jpa;
 
 import java.util.List;
 
+import br.senai.sp.info.pweb.jucacontrol.models.CategoriaOcorrencia;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,9 @@ public class UsuarioJPA implements UsuarioDAO{
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void alterar(Usuario obj) {
-		sessionFactory.getCurrentSession().update(obj);		
+	public CategoriaOcorrencia alterar(Usuario obj) {
+		sessionFactory.getCurrentSession().update(obj);
+		return null;
 	}
 
 	@Override
@@ -49,12 +51,13 @@ public class UsuarioJPA implements UsuarioDAO{
 	}
 
 	@Override
-	public void deletar(Usuario usuario) {
-		sessionFactory.getCurrentSession().delete(usuario);		
+	public CategoriaOcorrencia deletar(Usuario usuario) {
+		sessionFactory.getCurrentSession().delete(usuario);
+		return null;
 	}
 
 	@Override
-	 //Determina que este método precisa ter uma transação aberta antes de ser chamado
+	 //Determina que este mï¿½todo precisa ter uma transaï¿½ï¿½o aberta antes de ser chamado
 	public void persistir(Usuario obj) {
 		sessionFactory.getCurrentSession().persist(obj);
 	}
@@ -74,7 +77,7 @@ public class UsuarioJPA implements UsuarioDAO{
 		List<Usuario> resultado =  query.list();
 		
 		
-		//Ja que queremos apenas um objeto, devemos verificar se a lista NÃO é vazia
+		//Ja que queremos apenas um objeto, devemos verificar se a lista Nï¿½O ï¿½ vazia
 		if(!resultado.isEmpty()) {
 			return resultado.get(0);
 		}else {
@@ -99,7 +102,7 @@ public class UsuarioJPA implements UsuarioDAO{
 		List<Usuario> resultado =  query.list();
 		
 		
-		//Ja que queremos apenas um objeto, devemos verificar se a lista NÃO é vazia
+		//Ja que queremos apenas um objeto, devemos verificar se a lista Nï¿½O ï¿½ vazia
 		if(!resultado.isEmpty()) {
 			return resultado.get(0);
 		}else {
