@@ -1,7 +1,5 @@
 package br.senai.sp.info.pweb.jucacontrol.config;
 
-import java.awt.image.BufferedImage;
-
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

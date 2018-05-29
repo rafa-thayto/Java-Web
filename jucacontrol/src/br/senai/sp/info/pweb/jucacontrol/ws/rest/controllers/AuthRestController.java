@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import br.senai.sp.info.pweb.jucacontrol.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,46 +18,44 @@ import br.senai.sp.info.pweb.jucacontrol.exceptions.EntidadeNaoEncontradaExcepti
 import br.senai.sp.info.pweb.jucacontrol.exceptions.ValidacaoException;
 import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 import br.senai.sp.info.pweb.jucacontrol.services.UsuarioService;
+import br.senai.sp.info.pweb.jucacontrol.utils.JwtUtils;
 import br.senai.sp.info.pweb.jucacontrol.utils.MapUtils;
 
 @RestController
 @RequestMapping("/rest/auth")
-public class AuthController {
+public class AuthRestController {
 
+	// meio ponto Thayto
 	@Autowired
 	private UsuarioService usuarioService;
 	
 	@PostMapping("/jwt")
-	public ResponseEntity<Object> gerarJwt(@RequestBody @Valid Usuario usuario, BindingResult bindingResult) {
+	public ResponseEntity<Object> gerarJwt(@Valid @RequestBody Usuario usuario
+				, BindingResult bindingResult) {
 		
 		try {
-			
+			// 200
 			Usuario usuarioBuscado = usuarioService.buscarPorEmailESenha(usuario, bindingResult);
-
-			Map<String, String> mapToken = new HashMap<>();
-			mapToken.put("token", JwtUtils.gerarToken(usuarioBuscado));
+			Map<String, String> mapaToken = new HashMap<>();
+			mapaToken.put("token", JwtUtils.gerarToken(usuarioBuscado));
 			return ResponseEntity
-					.ok(mapToken);
-			
+						.ok(mapaToken);
 		} catch (ValidacaoException e) {
-			
+			// 422
 			return ResponseEntity
-					.unprocessableEntity()
-					.body(MapUtils.mapaDe(bindingResult));
-			
+						.unprocessableEntity()
+						.body(MapUtils.mapaDe(bindingResult));
 		} catch (EntidadeNaoEncontradaException e) {
-			
+			// 404
 			return ResponseEntity
-					.notFound()
-					.header("X-REASON", "Entidade não encontrada")
-					.build();
-			
+						.notFound()
+						.header("X-Reason", "Entidade não encontrada")
+						.build();
 		} catch (Exception e) {
-			
+			// 500
 			return ResponseEntity
-					.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.build();
-			
+						.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.build();
 		}
 		
 	}

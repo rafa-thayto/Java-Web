@@ -1,6 +1,7 @@
 package br.senai.sp.info.pweb.jucacontrol.models;
 
 import java.io.File;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,11 +14,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.DigestUtils;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements Authentication {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +41,7 @@ public class Usuario {
 	
 	@Column(length = 120, nullable = false, unique = true)
 	@NotNull
-	@Email //Valida se o campo � um e-mail v�lido
+	@Email //Valida se o campo � um e-mail v�lido
 	@Size(max = 120)
 	private String email;
 	
@@ -108,5 +111,55 @@ public class Usuario {
 	
 	public void setCaminhoFoto(String caminhoFoto) {
 		this.caminhoFoto = caminhoFoto;
+	}
+
+	// Nome de quem está logado
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// Determina as autoridades que o usuário tem (nos próximos episódios...)
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	// "Senha não passarás"
+	@Override
+	public Object getCredentials() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// Sla men
+	@Override
+	public Object getDetails() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// Qual é o objeto que será utilizado como o objeto autenticado
+	@Override
+	public Object getPrincipal() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// Verifica se o usuário está autenticado
+	@Override
+	public boolean isAuthenticated() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	// Determina se está autenticado (Não utilizamos pois fazemos isso manualmente)
+	// no jwtFilter
+	@Override
+	public void setAuthenticated(boolean arg0) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
 	}
 }

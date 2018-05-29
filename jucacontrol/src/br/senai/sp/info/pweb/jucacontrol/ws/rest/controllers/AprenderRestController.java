@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.senai.sp.info.pweb.jucacontrol.models.CategoriaOcorrencia;
 
 @RestController //Este controller retorna DADOS e não uma VIEW
-@RequestMapping("/rest/categoriasasddsad")
+@RequestMapping("/rest/categorias/aprender")
 public class AprenderRestController {
 	
 	//Simula um banco de dados

@@ -12,24 +12,29 @@ import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 @Service
 public class UsuarioService {
 
+	// busca no banco
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 	
+	// meio ponto Matheus (não sei qual)
 	public Usuario buscarPorEmailESenha(Usuario usuario, BindingResult bindingResult) 
 			throws ValidacaoException, EntidadeNaoEncontradaException {
-		
+		// erro de validacao
 		if (bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("senha")) {
+			// gerar uma exception
 			throw new ValidacaoException();
 		}
 		
+		// verifica se o usuario existe atraves do email e senha
 		usuario.hashearSenha();
-		Usuario usuarioBuscado = usuarioDAO.buscarPorEmailESenha(usuario.getEmail(), usuario.getSenha());
+		Usuario usuarioBuscado = 
+				usuarioDAO.buscarPorEmailESenha(usuario.getEmail(), usuario.getSenha());
 		
 		if (usuarioBuscado == null) {
 			throw new EntidadeNaoEncontradaException();
 		}
 		
-		return usuarioBuscado; 
+		return usuarioBuscado;
 		
 	}
 	

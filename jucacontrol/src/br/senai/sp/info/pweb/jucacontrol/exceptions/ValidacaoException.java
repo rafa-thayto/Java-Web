@@ -1,9 +1,8 @@
 package br.senai.sp.info.pweb.jucacontrol.exceptions;
-
-
 /**
- * Exception destinada a validaÃ§Ãµes de entidade
- * @author Rafael Thayto
+ * Exception destinada a validações de entidades
+ * @author Felipe Oliveira
  */
-public class ValidacaoException extends Exception {
+public class ValidacaoException extends Exception{
+
 }
