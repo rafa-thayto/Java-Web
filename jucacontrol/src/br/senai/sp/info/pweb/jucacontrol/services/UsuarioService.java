@@ -1,5 +1,7 @@
 package br.senai.sp.info.pweb.jucacontrol.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -16,7 +18,7 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 	
-	// meio ponto Matheus (não sei qual)
+	// meio ponto Matheus (nï¿½o sei qual)
 	public Usuario buscarPorEmailESenha(Usuario usuario, BindingResult bindingResult) 
 			throws ValidacaoException, EntidadeNaoEncontradaException {
 		// erro de validacao
